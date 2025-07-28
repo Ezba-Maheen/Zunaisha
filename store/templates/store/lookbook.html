@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Featured Lookbook - ZOHAN ARTS{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Page specific styles for Lookbook Slider */
+    .lookbook-header {
+        text-align: center;
+        margin-top: 40px;
+        margin-bottom: 30px;
+        font-family: 'Playfair Display', serif;
+        font-size: 3em;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: #333;
+    }
+
+    /* Carousel/Slider Styling - Reusing styles from lookbook_detail.html for consistency */
+    #lookbookCarousel {
+        margin-bottom: 50px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .carousel-item img {
+        width: 100%;
+        height: 80vh; /* Adjust height as needed for aesthetic */
+        object-fit: cover; /* Ensures images cover the area */
+        object-position: center top; /* Focus on the top part of the image */
+        transition: transform 0.5s ease-in-out;
+    }
+
+    .carousel-item.active img {
+        transform: scale(1.0); /* No initial scale */
+    }
+
+    .carousel-item.active.carousel-item-start img,
+    .carousel-item.active.carousel-item-end img {
+        transform: scale(1.05); /* Slight zoom effect on active slide */
+    }
+
+    .carousel-caption {
+        background: rgba(0, 0, 0, 0.6);
+        padding: 20px;
+        border-radius: 8px;
+        color: #fff;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .carousel-caption h5 {
+        font-size: 2.2em;
+        margin-bottom: 10px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+    }
+
+    .carousel-caption p {
+        font-size: 1.1em;
+        line-height: 1.6;
+    }
+
+    /* Responsive adjustments for carousel */
+    @media (max-width: 991.98px) {
+        .carousel-item img {
+            height: 60vh;
+        }
+        .carousel-caption h5 {
+            font-size: 1.8em;
+        }
+        .carousel-caption p {
+            font-size: 1em;
+        }
+        .lookbook-header {
+            font-size: 2.5em;
+        }
+    }
+
+    @media (max-width: 767.98px) {
+        .carousel-item img {
+            height: 50vh;
+        }
+        .carousel-caption {
+            padding: 10px;
+        }
+        .carousel-caption h5 {
+            font-size: 1.5em;
+        }
+        .carousel-caption p {
+            font-size: 0.9em;
+        }
+        .lookbook-header {
+            font-size: 2em;
+            letter-spacing: 0.1em;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <h1 class="lookbook-header">{{ lookbook_title|default:"Our Featured Lookbook" }}</h1>
+
+        <div id="lookbookCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                {% for image in lookbook_images %}
+                    <button type="button" data-bs-target="#lookbookCarousel" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active" aria-current="true"{% endif %} aria-label="Slide {{ forloop.counter }}"></button>
+                {% endfor %}
+            </div>
+            <div class="carousel-inner">
+                {% for image in lookbook_images %}
+                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                        <img src="{% static image.src %}" class="d-block w-100" alt="{{ image.caption_heading|default:'Lookbook Image' }}">
+                        {% if image.caption_heading or image.caption_text %}
+                            <div class="carousel-caption d-none d-md-block">
+                                {% if image.caption_heading %}
+                                    <h5>{{ image.caption_heading }}</h5>
+                                {% endif %}
+                                {% if image.caption_text %}
+                                    <p>{{ image.caption_text }}</p>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% empty %}
+                    <div class="carousel-item active">
+                        <img src="{% static 'images/placeholder.png' %}" class="d-block w-100" alt="No Lookbook Images">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>No Images Available</h5>
+                            <p>Please add images to this lookbook in views.py.</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#lookbookCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#lookbookCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+    // Any specific JavaScript for this lookbook page can go here.
+    // The Bootstrap carousel functionality is already handled by Bootstrap's JS.
+</script>
+{% endblock %}

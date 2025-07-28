@@ -1,0 +1,84 @@
+{% extends 'base.html' %} {# Extends the base template #}
+{% load static %} {# Good practice, even if not directly using static in this file for now #}
+
+{% block title %}Shipping Policy - Zunaisha{% endblock %} {# Sets the title for this specific page #}
+
+{% block extra_css %}
+    {# Page-specific CSS for the Shipping Policy layout #}
+    <style>
+        body {
+            /* If base.html body has a background-color/image, this will override it */
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .policy-container {
+            max-width: 960px;
+            margin: 40px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+        }
+        .header-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .header-section .back-arrow {
+            font-size: 1.5rem;
+            color: #343a40;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+        .header-section h1 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #343a40;
+            margin: 0;
+            text-align: center;
+            flex-grow: 1;
+        }
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #343a40;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        .content-text {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 10px; /* Adjusted for list-like appearance */
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    {# Main content of the Shipping Policy page goes here #}
+    <div class="policy-container">
+        <div class="header-section">
+            <i class="fas fa-arrow-left back-arrow" onclick="history.back()"></i>
+            <h1>Shipping Policy</h1>
+            <div></div> {# Empty div to push title to center if arrow is present #}
+        </div>
+
+        <h2 class="section-title">EXPECTED DELIVERY TIME FOR READY TO WEAR ITEMS:</h2>
+        <p class="content-text">
+            Within Pakistan: 1-3 working days
+        </p>
+        <p class="content-text">
+            International: 6-8 working days
+        </p>
+        <p class="content-text">
+            Shipping time varies for customized items and will be mentioned on individual product detail page.
+        </p>
+
+        <h2 class="section-title">SHIPPING AND CUSTOMS DUTIES:</h2>
+        <p class="content-text">
+            Shipping charges are based on destination, size and weight of your order on international orders. Any customs duties or taxes, if applicable by the respective country's officials will be borne by the customer.
+        </p>
+    </div>
+{% endblock %}
+
+{# No extra_js needed for this specific page, as history.back() is inline and handled by the browser #}

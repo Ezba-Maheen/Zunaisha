@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Premium Pret '25 - ZOHAN ARTS{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Custom CSS for Card Styling (reused from page2.html for consistency) */
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: #f8f9fa; /* Light background for the page */
+        margin: 0;
+        padding: 20px 0; /* Add some vertical padding to the body */
+    }
+
+    .card-wrapper {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        height: 100%;
+    }
+
+    .product-card {
+        border: none;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .product-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+    }
+
+    .card-img-top {
+        width: 100%;
+        height: 500px; /* Adjust this to control image height and card overall size */
+        object-fit: cover;
+        border-bottom: 1px solid #eee;
+    }
+
+    .card-body {
+        padding: 1rem;
+        text-align: center;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .product-code {
+        font-size: 0.95em;
+        font-weight: 500;
+        color: #555;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+    }
+
+    .price-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 0.5rem;
+    }
+
+    .current-price {
+        font-size: 1.35em;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 0.2rem;
+    }
+
+    .original-price {
+        font-size: 0.9em;
+        font-weight: 400;
+        color: #999;
+        text-decoration: line-through;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 991.98px) {
+        .card-img-top {
+            height: 300px;
+        }
+        .current-price {
+            font-size: 1.2em;
+        }
+        .original-price {
+            font-size: 0.85em;
+        }
+    }
+
+    @media (max-width: 767.98px) {
+        .card-img-top {
+            height: 250px;
+        }
+        .current-price {
+            font-size: 1.1em;
+        }
+        .original-price {
+            font-size: 0.8em;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <br>
+    <br>
+
+    <div class="container my-5">
+        <h2 class="text-center mb-4" style="font-family: 'Playfair Display', serif; font-size: 2.5em; letter-spacing: 0.1em; text-transform: uppercase;">PREMIUM PRET '25 COLLECTION</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
+            {% for product in products %}
+            <div class="col d-flex">
+                <a href="{% url 'product_detail' product.id %}" class="card-wrapper">
+                    <div class="card product-card">
+                        {% if product.image %}
+                            <img src="{% static product.image %}" class="card-img-top" alt="{{ product.name }}">
+                        {% else %}
+                            <img src="{% static 'images/placeholder.jpg' %}" class="card-img-top" alt="No Image">
+                        {% endif %}
+                        <div class="card-body">
+                            <div class="text-content">
+                                <div class="product-code">{{ product.product_code|default:"N/A" }}</div> {# Assuming product_code field exists #}
+                                <div class="price-section">
+                                    <div class="current-price">PKR {{ product.price|floatformat:2 }}</div>
+                                    {% if product.original_price %} {# Assuming original_price field exists for sale items #}
+                                        <div class="original-price">PKR {{ product.original_price|floatformat:2 }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p>No products available in the "Premium Pret '25" collection yet. Please add some in the Django admin!</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <br><br>
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+    // Any JavaScript specific to premium.html goes here.
+</script>
+{% endblock %}

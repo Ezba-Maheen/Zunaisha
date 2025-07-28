@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Zunaisha - Products</title>
+</head>
+<body>
+    <h1>All Products</h1>
+
+    {% for product in products %}
+        <div style="border: 1px solid #ccc; padding: 10px; margin: 10px;">
+            <h3>{{ product.name }}</h3>
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" width="150">
+            <p>Price: Rs {{ product.price }}</p>
+            <form method="post" action="{% url 'add_to_cart' product.id %}">
+                {% csrf_token %}
+                <button type="submit">Add to Cart</button>
+            </form>
+        </div>
+    {% empty %}
+        <p>No products available.</p>
+    {% endfor %}
+
+    <a href="{% url 'view_cart' %}">🛒 View Cart</a>
+</body>
+</html>

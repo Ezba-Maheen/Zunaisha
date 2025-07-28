@@ -1,0 +1,69 @@
+.site-nav a, .site-nav button {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-decoration: none;
+    padding: 15px;
+    white-space: nowrap;
+}
+.nav-bar a {
+    color: rgb(100, 101, 103);
+}
+
+.nav-bar a, .nav-bar button {
+    color: rgb(255, 255, 255);
+}
+a {
+    border: none;
+    text-decoration: none;
+}
+
+a, p, li, span, input, input::placeholder {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 400;
+}
+
+a {
+    color: rgb(100, 101, 103);
+    transition: 0.4s;
+}
+
+a {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    background: transparent;
+}
+a {
+    color: #007bff;
+    text-decoration: none;
+    background-color: transparent;
+    -webkit-text-decoration-skip: objects;
+}
+* {
+    box-sizing: border-box;
+}
+
+*, input, ::before, ::after {
+    box-sizing: border-box;
+}
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+user agent stylesheet
+a:-webkit-any-link {
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+a, p, li, span, input, input::placeholder {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 400;
+}
+user agent stylesheet
+li {
+    text-align: -webkit-match-parent;
+    text-size-adjust: 400;
+    padding: 0%;
+    margin: 0;
+}

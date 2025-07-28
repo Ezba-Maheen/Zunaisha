@@ -1,0 +1,460 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}ZUNAISHA ARTS - Home{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* General body styling (from your original index.html, some might be redundant with base.html) */
+    body {
+        font-family: 'Inter', sans-serif; /* General body font */
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Keyframe for fade-in animation (already in base.html, but keeping here if you had specific overrides) */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Carousel Styles */
+    .carousel-caption-custom {
+        bottom: 50%;
+        transform: translateY(50%);
+        left: 10%;
+        text-align: left;
+    }
+    .carousel-item {
+        transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+    }
+    .carousel-item img {
+        height: 85vh;
+        object-fit: cover;
+    }
+    .carousel-caption {
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 10px;
+        padding: 20px;
+    }
+    @media (max-width: 768px) {
+        .carousel-caption {
+            font-size: 14px;
+            padding: 10px;
+        }
+        .carousel-item img {
+            height: 60vh;
+        }
+    }
+
+    /* Card Styles (from your original code) */
+    .card {
+        transform: scale(1.02);
+        transition: transform 0.3s ease-in-out;
+        width: 95%;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        margin: 15px auto;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+    }
+
+    .card img {
+        height: 500px;
+        object-fit: cover;
+    }
+
+    .card-title {
+        text-align: center;
+        margin-top: 10px;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 16px;
+        transition: color 0.3s ease;
+        text-decoration: none !important; /* Ensure no underline */
+    }
+
+    .card-title:hover {
+        color: #a52a2a;
+        cursor: pointer;
+    }
+
+    .card-text { /* Added from your previous request for cards */
+        font-family: 'Playfair Display', serif;
+        font-size: 1em;
+        color: #666;
+        line-height: 1.5;
+        letter-spacing: 0.02em;
+        text-decoration: none !important; /* Ensure no underline */
+    }
+
+    @media (max-width: 768px) {
+        .card img {
+            height: 220px;
+        }
+    }
+
+    .section-heading {
+        font-family: 'Georgia', serif;
+        font-size: 16px;
+        letter-spacing: 15px;
+        color: #000;
+        font-weight: 400;
+    }
+    
+    /* Your existing li style (might not be needed with Bootstrap nav) */
+    .li {
+        text-align: -webkit-match-parent;
+        text-size-adjust: 400;
+        padding: 0%;
+        margin: 0;
+    }
+
+    /* Custom Image Sections */
+    .center-container {
+        width: 100vw;
+        height: 100vh;
+        background-color: #f2f2f2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .custom-image-wrapper {
+        width: 90vw;
+        max-width: 1200px;
+        height: 90vh;
+        max-height: 800px;
+        overflow: hidden;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .custom-image-wrapper:hover {
+        transform: scale(1.02);
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+    }
+
+    .custom-image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    @media (max-width: 768px) {
+        .custom-image-wrapper {
+            width: 95vw;
+            height: 70vh;
+        }
+    }
+
+    /* Image Boxes (from your original code) */
+    .container.image-boxes-section { /* Added a class for clarity */
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 40px;
+        padding: 20px;
+        flex-wrap: wrap;
+    }
+
+    .image-box {
+        width: 400px;
+        border-radius: 15px;
+        overflow: hidden;
+        background-color: #fff;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        text-align: center;
+        text-decoration: none;
+    }
+
+    .image-box:hover {
+        transform: scale(1.03);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .image-box img {
+        width: 100%;
+        height: 500px;
+        object-fit: cover;
+        display: block;
+    }
+
+    .image-box p {
+        margin: 15px 0;
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: #333;
+        transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+
+    .image-box:hover p {
+        color: #b30059;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (max-width: 900px) {
+        .image-box {
+            width: 90vw;
+        }
+        .image-box img {
+            height: 350px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <div id="multiSlideCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+
+            <!-- Slide 1 -->
+            <div class="carousel-item active">
+                <img src="{% static 'images/logo.jpg' %}" class="d-block w-100" alt="Slide 1">
+                
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="carousel-item">
+                <img src="{% static 'images/a2.jpeg' %}" class="d-block w-100" alt="Slide 2">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Look 2</h5>
+                    <p>Bold and Beautiful</p>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="carousel-item">
+                <img src="{% static 'images/a3.jpeg' %}" class="d-block w-100" alt="Slide 3">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Look 3</h5>
+                    <p>Unstitched Collection</p>
+                </div>
+            </div>
+
+            <!-- Slide 4 -->
+            <div class="carousel-item">
+                <img src="{% static 'images/a4.jpeg' %}" class="d-block w-100" alt="Slide 4">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Look 4</h5>
+                    <p>Mid Season Elegance</p>
+                </div>
+            </div>
+
+            <!-- Slide 5 -->
+            <div class="carousel-item">
+                <img src="{% static 'images/a5.jpeg' %}" class="d-block w-100" alt="Slide 5">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Look 5</h5>
+                    <p>Luxury Pret Styles</p>
+                </div>
+            </div>
+
+            <!-- Slide 7 -->
+            <div class="carousel-item">
+                <img src="{% static 'images/a10.jpeg' %}" class="d-block w-100" alt="Slide 7">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Look 7</h5>
+                    <p>Winter Couture</p>
+                </div>
+            </div>
+
+            <!-- Slide 8 -->
+            <div class="carousel-item">
+                <img src="{% static 'images/a3.jpeg' %}" class="d-block w-70" alt="Slide 8">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Look 8</h5>
+                    <p>Effortless Styling</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#multiSlideCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#multiSlideCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+    <br><br>
+    <h2 class="section-heading text-center my-5">R E A D Y &nbsp; - &nbsp; T O &nbsp; - &nbsp; W E A R</h2>
+
+
+    <div id="cardCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+
+            <!-- Slide 1 -->
+            <div class="carousel-item active">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card">
+                                <a href="{% url 'store:home' %}"> {# Changed from product3 to home #}
+                                    <img src="{% static 'images/p10.jpeg' %}" class="card-img-top" alt="Premium Pret">
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="card-title">Luxury Formals</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <a href="{% url 'store:home' %}"><img src="{% static 'images/p2.jpeg' %}" class="card-img-top" alt="Premium Pret"> {# Changed from product3 to home #}
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="card-title">Premium Pret</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <a href="{% url 'store:home' %}"> {# Changed from product3 to home #}
+                                    <img src="{% static 'images/p3.jpeg' %}" class="card-img-top" alt="Wedding Formals">
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="card-title">Wedding Formals</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slides 2 to 8 (Repeat structure with different images/text) -->
+            <!-- Slide 2 -->
+            <div class="carousel-item">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card">
+                                <a href="{% url 'store:home' %}"> {# Changed from product3 to home #}
+                                    <img src="{% static 'images/p4.png' %}" class="card-img-top" alt="Luxury Formals">
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="card-title">Luxury Formals</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <a href="{% url 'store:home' %}"> {# Changed from product3 to home #}
+                                    <img src="{% static 'images/p5.jpeg' %}" class="card-img-top" alt="Premium Pret">
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="card-title">Premium Pret</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <a href="{% url 'store:home' %}"> {# Changed from product3 to home #}
+                                    <img src="{% static 'images/p6.jpeg' %}" class="card-img-top" alt="Wedding Formals">
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="card-title">Wedding Formals</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="carousel-item">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card">
+                                <a href="{% url 'store:home' %}"> {# Changed from product3 to home #}
+                                    <img src="{% static 'images/p7.jpeg' %}" class="card-img-top" alt="Slide">
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="card-title">Festive Pret</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <a href="{% url 'store:home' %}"> {# Changed from product3 to home #}
+                                    <img src="{% static 'images/p8.jpeg' %}" class="card-img-top" alt="Slide">
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="card-title">Luxury Pret</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <a href="{% url 'store:home' %}"> {# Changed from product3 to home #}
+                                    <img src="{% static 'images/p9.jpeg' %}" class="card-img-top" alt="Slide">
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="card-title">Classy Pret</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add 5 more slides following the same structure if needed -->
+
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#cardCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#cardCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+
+
+    <br><br><br>
+    <div class="center-container">
+        <a href="javascript:void(0);" class="custom-image-wrapper"> {# Changed to javascript:void(0) as no specific URL provided #}
+            <img src="{% static 'images/a1.jpeg' %}" alt="Centered Image" />
+        </a>
+    </div>
+    <br><br><br>
+    <div class="container image-boxes-section">
+        <a href="javascript:void(0);" class="image-box"> {# Changed to javascript:void(0) #}
+            <img src="{% static 'images/p22.jpeg' %}" alt="Deluxe" />
+            <p>DELUXE</p>
+        </a>
+
+        <a href="javascript:void(0);" class="image-box"> {# Changed to javascript:void(0) #}
+            <img src="{% static 'images/j7.jpeg' %}" alt="Jewelry" />
+            <p>JEWELRY</p>
+        </a>
+    </div>
+
+    <br><br><br>
+
+    <div class="center-container">
+        <a href="javascript:void(0);" class="custom-image-wrapper"> {# Changed to javascript:void(0) #}
+            <img src="{% static 'images/g1.jpeg' %}" alt="Centered Image" />
+        </a>
+    </div>
+
+    <br><br><br>
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+    // Any JavaScript specific to index.html goes here
+    // The Bootstrap JS bundle is already loaded in base.html, no need to include it here.
+</script>
+{% endblock %}

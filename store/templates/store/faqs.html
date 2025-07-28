@@ -1,0 +1,287 @@
+{% extends 'base.html' %} {# Extends the base template #}
+{% load static %} {# Good practice, even if not directly using static in this file for now #}
+
+{% block title %}FAQs - Zunaisha{% endblock %} {# Sets the title for this specific page #}
+
+{% block extra_css %}
+    {# Page-specific CSS for the FAQ layout and accordion styling #}
+    <style>
+        body {
+            /* If base.html body has a background-color/image, this will override it */
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .faq-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+        }
+        .faq-header {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #343a40;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .faq-item {
+            border-bottom: 1px solid #eee; /* This might be redundant with accordion-item shadow/margin below */
+            margin-bottom: 0;
+        }
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+        .faq-question-button {
+            width: 100%;
+            text-align: left;
+            padding: 18px 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            background-color: transparent;
+            border: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .faq-question-button:hover {
+            background-color: #f0f0f0;
+        }
+        .faq-question-button .icon {
+            font-size: 1.2rem;
+            color: #6c757d;
+            transition: transform 0.3s ease;
+        }
+        .faq-question-button[aria-expanded="true"] .icon {
+            transform: rotate(180deg); /* Rotate for minus effect */
+        }
+        .faq-answer {
+            padding: 15px 20px 20px 20px;
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.6;
+            background-color: #fdfdfd;
+            border-top: 1px solid #eee;
+        }
+        .accordion-button:not(.collapsed) {
+            color: #0056b3; /* Color when expanded */
+            background-color: #e7f1ff; /* Light blue background when expanded */
+            box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .125);
+        }
+        .accordion-button:focus {
+            box-shadow: none; /* Remove default focus outline */
+        }
+        .accordion-item {
+            border: none; /* Remove default accordion item border */
+            margin-bottom: 10px; /* Add some space between items */
+            border-radius: 8px;
+            overflow: hidden; /* Ensures rounded corners apply to content */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Subtle shadow for each item */
+        }
+        .accordion-body {
+            padding: 1rem 1.25rem;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    {# Main content of the FAQ page goes here #}
+    <div class="faq-container">
+        <h1 class="faq-header">FAQs</h1>
+
+        <div class="accordion" id="faqAccordion">
+            <div class="accordion-item faq-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button faq-question-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        WHAT IS THE DELIVERY TIME?
+                        <i class="fas fa-plus icon"></i>
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body faq-answer">
+                        Typically, our local deliveries take 3 to 5 days, while international orders are delivered within 6 to 8 days. However, certain products may require additional processing time, which is indicated on their respective pages below the product descriptions.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item faq-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button faq-question-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        WHAT IF THE PRODUCT COLOR VARIES?
+                        <i class="fas fa-plus icon"></i>
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body faq-answer">
+                        Please note that product colors may vary slightly due to photographic lighting sources or your monitor settings. We strive for accuracy, but minor variations are possible.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item faq-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button faq-question-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        CAN I CANCEL MY ORDER?
+                        <i class="fas fa-plus icon"></i>
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body faq-answer">
+                        Orders can be canceled within 24 hours of placement, provided the item has not yet been shipped. Please contact our customer service team immediately to request a cancellation.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item faq-item">
+                <h2 class="accordion-header" id="headingFour">
+                    <button class="accordion-button faq-question-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        DO YOU SHIP INTERNATIONALLY?
+                        <i class="fas fa-plus icon"></i>
+                    </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body faq-answer">
+                        Yes, we offer international shipping to most countries. Shipping costs and delivery times vary depending on the destination. Please check our shipping policy for more details.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item faq-item">
+                <h2 class="accordion-header" id="headingFive">
+                    <button class="accordion-button faq-question-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                        CAN I AMEND MY ORDER?
+                        <i class="fas fa-plus icon"></i>
+                    </button>
+                </h2>
+                <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body faq-answer">
+                        Order amendments are possible within 12 hours of placement, provided the order has not been processed for shipping. Contact us with your order details and the changes you wish to make.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item faq-item">
+                <h2 class="accordion-header" id="headingSix">
+                    <button class="accordion-button faq-question-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                        CAN I RETURN THE PRODUCT?
+                        <i class="fas fa-plus icon"></i>
+                    </button>
+                </h2>
+                <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body faq-answer">
+                        Yes, we accept returns within 7 days of delivery, provided the product is unused, in its original packaging, and accompanied by the original receipt. Please refer to our detailed return policy for full terms and conditions.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item faq-item">
+                <h2 class="accordion-header" id="headingSeven">
+                    <button class="accordion-button faq-question-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                        WHAT IS THE EXCHANGE POLICY?
+                        <i class="fas fa-plus icon"></i>
+                    </button>
+                </h2>
+                <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body faq-answer">
+                        We offer exchanges for products within 10 days of delivery if there is a size issue or a defect. The item must be in its original condition. Please contact us to initiate an exchange.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item faq-item">
+                <h2 class="accordion-header" id="headingEight">
+                    <button class="accordion-button faq-question-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                        HOW CAN I TRACK MY ORDER?
+                        <i class="fas fa-plus icon"></i>
+                    </button>
+                </h2>
+                <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body faq-answer">
+                        Once your order is shipped, you will receive an email with a tracking number and a link to the courier's website. You can use this tracking number to monitor the status of your delivery.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item faq-item">
+                <h2 class="accordion-header" id="headingNine">
+                    <button class="accordion-button faq-question-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+                        WHAT IF MY MERCHANDISE DOES NOT FIT?
+                        <i class="fas fa-plus icon"></i>
+                    </button>
+                </h2>
+                <div id="collapseNine" class="accordion-collapse collapse" aria-labelledby="headingNine" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body faq-answer">
+                        If your merchandise does not fit, you can exchange it for a different size within our exchange policy period (10 days). Please ensure the item is in its original condition with tags attached.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item faq-item">
+                <h2 class="accordion-header" id="headingTen">
+                    <button class="accordion-button faq-question-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+                        WHAT IF MY MERCHANDISE IS DAMAGED?
+                        <i class="fas fa-plus icon"></i>
+                    </button>
+                </h2>
+                <div id="collapseTen" class="accordion-collapse collapse" aria-labelledby="headingTen" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body faq-answer">
+                        In the rare event that your merchandise arrives damaged, please contact our customer service team immediately with photos of the damage. We will arrange for a replacement or refund as per our policy.
+                    </div>
+                </div>
+            </div>
+
+          
+            
+
+
+            <div class="accordion-item faq-item">
+                <h2 class="accordion-header" id="headingFourteen">
+                    <button class="accordion-button faq-question-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFourteen" aria-expanded="false" aria-controls="collapseFourteen">
+                        HOW SHALL I MAKE A PAYMENT?
+                        <i class="fas fa-plus icon"></i>
+                    </button>
+                </h2>
+                <div id="collapseFourteen" class="accordion-collapse collapse" aria-labelledby="headingFourteen" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body faq-answer">
+                       You can pay cash on delivery.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    {# Page-specific JavaScript for the accordion icons #}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.accordion-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const icon = button.querySelector('.icon');
+                    // Toggle the class based on the 'aria-expanded' attribute after the click
+                    // Bootstrap handles the aria-expanded state, so we check its *new* value
+                    if (button.getAttribute('aria-expanded') === 'true') {
+                        icon.classList.remove('fa-plus');
+                        icon.classList.add('fa-minus');
+                    } else {
+                        icon.classList.remove('fa-minus');
+                        icon.classList.add('fa-plus');
+                    }
+                });
+            });
+
+            // Initialize icons based on initial state (for the first item which is 'show' by default)
+            const firstButton = document.querySelector('#headingOne .accordion-button');
+            const firstIcon = firstButton ? firstButton.querySelector('.icon') : null;
+            if (firstButton && firstIcon && firstButton.getAttribute('aria-expanded') === 'true') {
+                firstIcon.classList.remove('fa-plus');
+                firstIcon.classList.add('fa-minus');
+            }
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Basic 25-V2 Lookbook - ZOHAN ARTS{% endblock title %}
+
+{% block extra_css %}
+<style>
+    /* Page specific styles for Lookbook */
+    .lookbook-container {
+        padding: 40px 20px;
+        text-align: center;
+    }
+
+    .lookbook-heading {
+        font-family: 'Playfair Display', serif;
+        font-size: 3.5em;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 40px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+    }
+
+    .lookbook-item {
+        margin-bottom: 60px; /* Space between each lookbook entry */
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .lookbook-item:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .lookbook-image {
+        width: 100%;
+        height: 700px; /* Fixed height for lookbook images */
+        object-fit: cover;
+        display: block;
+    }
+
+    .lookbook-caption {
+        padding: 30px;
+    }
+
+    .caption-heading {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.2em;
+        font-weight: 700;
+        color: #000;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .caption-text {
+        font-family: 'Inter', sans-serif;
+        font-size: 1.1em;
+        color: #555;
+        line-height: 1.8;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    @media (max-width: 991.98px) {
+        .lookbook-heading {
+            font-size: 2.8em;
+        }
+        .lookbook-image {
+            height: 500px;
+        }
+        .caption-heading {
+            font-size: 1.8em;
+        }
+        .caption-text {
+            font-size: 1em;
+        }
+    }
+
+    @media (max-width: 767.98px) {
+        .lookbook-heading {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        .lookbook-item {
+            margin-bottom: 40px;
+        }
+        .lookbook-image {
+            height: 400px;
+        }
+        .caption-heading {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        .caption-text {
+            font-size: 0.9em;
+            padding: 20px;
+        }
+    }
+</style>
+{% endblock extra_css %}
+
+{% block content %}
+    <div class="container lookbook-container">
+        <h1 class="lookbook-heading">Basic 25-V2 Lookbook</h1>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="lookbook-item">
+                    <img src="{% static 'images/g1.jpeg' %}" alt="Basic 25 V2 - Style 1" class="lookbook-image">
+                    <div class="lookbook-caption">
+                        <h2 class="caption-heading">Basic 25 V2 - Style 1</h2>
+                        <p class="caption-text">Everyday essentials designed for comfort and effortless style. Perfect for your daily wardrobe.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-10">
+                <div class="lookbook-item">
+                    <img src="{% static 'images/g2.jpeg' %}" alt="Basic 25 V2 - Style 2" class="lookbook-image">
+                    <div class="lookbook-caption">
+                        <h2 class="caption-heading">Basic 25 V2 - Style 2</h2>
+                        <p class="caption-text">Comfort and style combined, offering versatile pieces that transition seamlessly from day to night.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-10">
+                <div class="lookbook-item">
+                    <img src="{% static 'images/g3.jpeg' %}" alt="Basic 25 V2 - Style 3" class="lookbook-image">
+                    <div class="lookbook-caption">
+                        <h2 class="caption-heading">Basic 25 V2 - Style 3</h2>
+                        <p class="caption-text">Minimalist designs with maximum impact. Elevate your basic wardrobe with these chic additions.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-10">
+                <div class="lookbook-item">
+                    <img src="{% static 'images/g4.jpeg' %}" alt="Basic 25 V2 - Style 4" class="lookbook-image">
+                    <div class="lookbook-caption">
+                        <h2 class="caption-heading">Basic 25 V2 - Style 4</h2>
+                        <p class="caption-text">Soft fabrics and flattering silhouettes make these pieces a must-have for any season.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-10">
+                <div class="lookbook-item">
+                    <img src="{% static 'images/g5.jpeg' %}" alt="Basic 25 V2 - Style 5" class="lookbook-image">
+                    <div class="lookbook-caption">
+                        <h2 class="caption-heading">Basic 25 V2 - Style 5</h2>
+                        <p class="caption-text">Discover the perfect blend of simplicity and sophistication in our latest basic collection.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+    // No specific JavaScript needed for this page.
+</script>
+{% endblock extra_js %}

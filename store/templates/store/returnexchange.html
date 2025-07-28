@@ -1,0 +1,112 @@
+{% extends 'base.html' %} {# Extends the base template #}
+{% load static %} {# Good practice, even if not directly using static in this file for now #}
+
+{% block title %}Return & Exchange Policy - Zunaisha{% endblock %} {# Sets the title for this specific page #}
+
+{% block extra_css %}
+    {# Page-specific CSS for the Return & Exchange layout #}
+    <style>
+        body {
+            /* If base.html body has a background-color/image, this will override it */
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .return-exchange-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+        }
+        .header-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .header-section .back-arrow {
+            font-size: 1.5rem;
+            color: #343a40;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+        .header-section h1 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #343a40;
+            margin: 0;
+            text-align: center; /* Center the title */
+            flex-grow: 1; /* Allow it to take available space */
+        }
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #343a40;
+            margin-bottom: 15px;
+        }
+        .content-text {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .content-list {
+            list-style-type: disc;
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        .content-list li {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+        .numbered-list {
+            list-style-type: decimal;
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        .numbered-list li {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    {# Main content of the Return & Exchange page goes here #}
+    <div class="return-exchange-container">
+        <div class="header-section">
+            <i class="fas fa-arrow-left back-arrow" onclick="history.back()"></i>
+            <h1>Return & Exchange</h1>
+            <div></div>
+        </div>
+
+        <h2 class="section-title">Refund:</h2>
+        <p class="content-text">
+            We have no existing refund policy. Zunaisha by Zohan Arts has the authority to cancel orders for reasons such as the item is out of stock, pricing errors, or the credit card payment declined by the issuing financial institution.
+        </p>
+        <ul class="content-list">
+            <li>Zunaisha by Zohan Arts is not responsible for bleeding, damage of print, or fading of colors due to washing.</li>
+            <li>If during delivery, customs' duties are applicable, they will be paid in full by the customer.</li>
+            <li>Any declarations regarding faulty items will be entertained by Zunaisha by Zohan Arts only in the 5 hours following the customer receiving the parcel.</li>
+        </ul>
+
+        <h2 class="section-title">Order Cancellation:</h2>
+        <ol class="numbered-list">
+            <li>Zunaisha by Zohan Arts does not offer a "refund" or "money back guarantee" on purchased items.</li>
+            <li>Customers paying via Credit Card or PayPal may cancel within 24 hours of placing the order. Order amount will not be refunded back instead a coupon of same value will be provided that can be used to purchase from Zunaisha by Zohan Arts within next 60 days.</li>
+            <li>Zunaisha by Zohan Arts may cancel orders for any reason. Common reasons may include the item is out of stock, pricing errors or credit card or pay pal payment is declined.</li>
+            <li>We do not store Credit card details nor do we share customer details with any 3rd parties.</li>
+        </ol>
+
+        <h2 class="section-title">Exchange & Replace:</h2>
+        <p class="content-text">
+            We do not have any exchange or replace policy (for both local or international). We will only be able to accept exchanges pertaining to manufacturing defects, wrong items shipped, and size errors. In such cases, claims can only be entertained if they are made within 15 days of the original order date.
+        </p>
+    </div>
+{% endblock %}
+
+{# No extra_js needed for this specific page, as history.back() is inline #}

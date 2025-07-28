@@ -1,0 +1,292 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Track Your Order - My Store{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Apply general font/background if base.html doesn't provide them globally for body */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 130px); /* Adjust this value if needed based on your header/footer heights */
+            padding: 20px 0;
+            box-sizing: border-box;
+        }
+
+        .track-order-container {
+            max-width: 500px;
+            width: 100%;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            margin: auto;
+        }
+        .header-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .header-section .back-arrow {
+            font-size: 1.5rem;
+            color: #343a40;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+        .header-section h1 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #343a40;
+            margin: 0;
+        }
+        .form-description {
+            font-size: 1rem;
+            color: #6c757d;
+            margin-bottom: 25px;
+        }
+        .form-label {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 8px;
+        }
+        .form-control {
+            border-radius: 5px;
+            padding: 12px 15px;
+            border: 1px solid #ced4da;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .form-control:focus {
+            border-color: #80bdff;
+            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+            outline: none;
+        }
+        .form-text {
+            font-size: 0.875rem;
+            color: #6c757d;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        .btn-track-order { /* This class is now overridden by btn btn-dark w-100 below */
+            width: 100%;
+            padding: 12px;
+            background-color: #495057;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .btn-track-order:hover {
+            background-color: #343a40;
+            color: #fff;
+        }
+        /* Styles for tracking results */
+        #loading { text-align: center; padding: 10px; display: none; }
+        #error-message { color: red; text-align: center; margin-top: 10px; display: none; }
+        #tracking-results { margin-top: 20px; border-top: 1px solid #eee; padding-top: 20px; }
+        .result-item { margin-bottom: 10px; }
+        .result-item strong { color: #333; }
+        .status-badge { display: inline-block; padding: 5px 10px; border-radius: 5px; font-weight: bold; color: white; }
+        .status-badge.in-packing { background-color: #ffc107; } /* Yellow */
+        .status-badge.dispatched-to-shipping-company { background-color: #17a2b8; } /* Cyan */
+        .status-badge.on-the-way { background-color: #28a745; } /* Green */
+        .status-badge.delivered { background-color: #6610f2; }   /* Indigo */
+        .status-badge.cancelled { background-color: #dc3545; }   /* Red for cancelled */
+        .status-badge.unknown { background-color: #343a40; }     /* Dark Grey */
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="track-order-container">
+        <div class="header-section">
+            <i class="fas fa-arrow-left back-arrow" onclick="history.back()"></i>
+            <h1>Track Order</h1>
+        </div>
+
+        <p class="form-description">
+            Track your order easily with your Order ID and email.
+        </p>
+
+        <form id="trackingForm"> {# Changed ID from 'track-form' to 'trackingForm' to match my earlier suggestion #}
+            <div class="mb-3">
+                <label for="orderId" class="form-label">Order ID*</label>
+                <input type="text" class="form-control" id="orderId" name="order_id" placeholder="Enter Order ID" required>
+            </div>
+            <div class="mb-3">
+                <label for="emailOrPhone" class="form-label">Email Address </label>
+                <input type="text" class="form-control" id="emailOrPhone" name="email_or_phone" placeholder="Enter Email Address or Phone Number" required>
+                <div class="form-text">
+                    Note: You can track an order using the email address it was placed with.
+                </div>
+            </div>
+            {# Changed button classes to match Bootstrap and make it full width as in your screenshots #}
+            <button type="submit" class="btn btn-dark w-100">Track My Order</button> 
+        </form>
+
+        {# Loading, Error, and Results divs #}
+        <div id="loading" class="text-center mt-4" style="display: none;">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p>Loading tracking information...</p>
+        </div>
+
+        <div id="error-message" class="mt-3 text-danger" style="display: none;"></div>
+
+        <div id="tracking-results" class="mt-4" style="display: none;">
+            <h2>Tracking Details:</h2>
+            <div class="result-item"><strong>Order ID:</strong> <span id="display-order-id"></span></div>
+            <div class="result-item"><strong>Email:</strong> <span id="display-customer-email"></span></div>
+            {# REMOVED: Customer Name: <div class="result-item"><strong>Customer Name:</strong> <span id="display-full-name"></span></div> #}
+            <div class="result-item"><strong>Current Status:</strong> <span id="display-simplified-status" class="status-badge"></span></div>
+            <div class="result-item"><strong>Order Date:</strong> <span id="display-order-date"></span></div>
+            {# REMOVED: Last Update Location: <div class="result-item"><strong>Last Update Location:</strong> <span id="display-last-location"></span></div> #}
+        </div>
+    </div>
+{% endblock %}
+
+{# Move the CSRF token input outside of extra_js block for safer DOM access #}
+<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+{% block extra_js %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all elements needed by their correct IDs
+            const trackingForm = document.getElementById('trackingForm');
+            const orderIdInput = document.getElementById('orderId');
+            const emailOrPhoneInput = document.getElementById('emailOrPhone');
+            const loadingDiv = document.getElementById('loading');
+            const errorMessageDiv = document.getElementById('error-message');
+            const resultsDiv = document.getElementById('tracking-results');
+            const csrfTokenElement = document.querySelector('[name=csrfmiddlewaretoken]');
+
+            // Get elements for displaying individual details (REMOVED displayFullName and displayLastLocation)
+            const displayOrderId = document.getElementById('display-order-id');
+            const displayCustomerEmail = document.getElementById('display-customer-email');
+            const displaySimplifiedStatus = document.getElementById('display-simplified-status');
+            const displayOrderDate = document.getElementById('display-order-date');
+            
+            // Critical element check (UPDATED to exclude displayFullName and displayLastLocation)
+            if (!trackingForm || !orderIdInput || !emailOrPhoneInput || !csrfTokenElement ||
+                !loadingDiv || !errorMessageDiv || !resultsDiv ||
+                !displayOrderId || !displayCustomerEmail || !displaySimplifiedStatus || !displayOrderDate) {
+                console.error("Critical elements for tracking not found. JS may not function.");
+                if (errorMessageDiv) {
+                    errorMessageDiv.textContent = 'A problem occurred loading tracking functionality. Please try again later.';
+                    errorMessageDiv.style.display = 'block';
+                }
+                return; // Stop script execution if elements are missing
+            }
+
+            const csrftoken = csrfTokenElement.value; // Get CSRF token once
+
+            trackingForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                console.log("Tracking form submitted!");
+
+                const orderId = orderIdInput.value.trim();
+                const emailOrPhone = emailOrPhoneInput.value.trim();
+
+                // Reset display areas
+                resultsDiv.style.display = 'none';
+                errorMessageDiv.style.display = 'none';
+                errorMessageDiv.textContent = '';
+                loadingDiv.style.display = 'block';
+
+                if (!orderId || !emailOrPhone) {
+                    errorMessageDiv.textContent = 'Please enter both Order ID and Email/Phone.';
+                    errorMessageDiv.style.display = 'block';
+                    loadingDiv.style.display = 'none';
+                    return;
+                }
+
+                const formData = new FormData();
+                formData.append('order_id', orderId);
+                formData.append('email_or_phone', emailOrPhone);
+
+                fetch('{% url "store:get_tracking_status" %}', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': csrftoken,
+                    },
+                    body: formData,
+                })
+                .then(response => {
+                    loadingDiv.style.display = 'none';
+                    if (!response.ok) {
+                        return response.json().catch(() => {
+                            throw new Error(`HTTP error! Status: ${response.status} - ${response.statusText}`);
+                        }).then(err => {
+                            throw new Error(err.error || `Server error: ${response.status}`);
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("API response:", data);
+                    if (data.success) {
+                        // Populate tracking details (REMOVED displayFullName and displayLastLocation)
+                        displayOrderId.textContent = data.order_id || 'N/A';
+                        displayCustomerEmail.textContent = data.customer_email || 'N/A';
+                        // displayFullName.textContent = data.full_name || 'N/A'; // REMOVED
+
+                        displaySimplifiedStatus.textContent = data.simulated_status || 'N/A';
+
+                        // Reset all status-badge classes first, then add the correct one
+                        displaySimplifiedStatus.className = 'status-badge';
+                        const simulatedStatusLower = (data.simulated_status || '').toLowerCase();
+
+                        if (simulatedStatusLower.includes('packing')) {
+                            displaySimplifiedStatus.classList.add('in-packing');
+                        } else if (simulatedStatusLower.includes('dispatched to the shipping company')) {
+                            displaySimplifiedStatus.classList.add('dispatched-to-shipping-company');
+                        } else if (simulatedStatusLower.includes('on the way') || simulatedStatusLower.includes('shipped')) {
+                            displaySimplifiedStatus.classList.add('on-the-way');
+                        } else if (simulatedStatusLower.includes('delivered')) {
+                            displaySimplifiedStatus.classList.add('delivered');
+                        } else if (simulatedStatusLower.includes('cancelled')) {
+                            displaySimplifiedStatus.classList.add('cancelled');
+                        } else {
+                            displaySimplifiedStatus.classList.add('unknown');
+                        }
+
+                        // For order date, use order_date from the response directly
+                        displayOrderDate.textContent = data.order_date || 'N/A';
+                        // displayLastLocation.textContent = data.last_update_detail ? data.last_update_detail.location : 'N/A'; // REMOVED
+
+                        resultsDiv.style.display = 'block';
+                    } else {
+                        errorMessageDiv.textContent = data.error || 'Order not found or an unknown error occurred.';
+                        errorMessageDiv.style.display = 'block';
+                    }
+                })
+                .catch(error => {
+                    console.error("Fetch error:", error);
+                    loadingDiv.style.display = 'none';
+                    errorMessageDiv.textContent = error.message || 'Failed to fetch tracking status. Please try again.';
+                    errorMessageDiv.style.display = 'block';
+                });
+            });
+
+            // Add event listener for the back arrow
+            const backArrow = document.querySelector('.back-arrow');
+            if (backArrow) {
+                backArrow.addEventListener('click', function() {
+                    history.back();
+                });
+            } else {
+                console.warn("Back arrow element not found.");
+            }
+        }); // End of DOMContentLoaded
+    </script>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends '/base.html' %}
+{% load static %}
+
+{% block title %}Aylin Unstitched Summer Lawn - Coming Soon - ZOHAN ARTS{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Page specific styles for Coming Soon */
+    .coming-soon-container {
+        text-align: center;
+        padding: 100px 20px;
+        min-height: calc(100vh - 200px); /* Adjust based on your header/footer height */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .coming-soon-heading {
+        font-family: 'Playfair Display', serif;
+        font-size: 3.5em;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 20px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+    }
+
+    .coming-soon-text {
+        font-family: 'Inter', sans-serif;
+        font-size: 1.2em;
+        color: #666;
+        line-height: 1.6;
+        max-width: 600px;
+    }
+
+    @media (max-width: 767.98px) {
+        .coming-soon-heading {
+            font-size: 2.5em;
+        }
+        .coming-soon-text {
+            font-size: 1em;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="container coming-soon-container">
+        <h1 class="coming-soon-heading">Coming Soon!</h1>
+        <p class="coming-soon-text">
+            We are working hard to bring you the exquisite Aylin Unstitched Summer Lawn Lookbook. Please check back soon for updates!
+        </p>
+    </div>
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+    // No specific JavaScript needed for this page.
+</script>
+{% endblock %}

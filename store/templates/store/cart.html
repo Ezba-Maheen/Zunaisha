@@ -1,0 +1,262 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Your Shopping Cart - ZOHAN ARTS{% endblock %}
+
+{% block extra_css %}
+<style>
+    main {
+        padding: 40px 20px;
+        background-color: #f8f9fa;
+    }
+    .cart-container {
+        max-width: 900px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    .cart-container h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.2em;
+        color: #333;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    .cart-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+    }
+    .cart-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+    .cart-item-image {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-right: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    .cart-item-details {
+        flex-grow: 1;
+    }
+    .cart-item-details h5 {
+        font-size: 1.2em;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 5px;
+    }
+    .cart-item-details p {
+        font-size: 0.9em;
+        color: #777;
+        margin-bottom: 5px;
+    }
+    .cart-item-price {
+        font-size: 1.1em;
+        font-weight: 700;
+        color: #000;
+        min-width: 120px; /* Ensure price column has enough width */
+        text-align: right;
+    }
+    .cart-item-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-left: 20px;
+    }
+    .quantity-input {
+        width: 60px;
+        padding: 5px 8px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        text-align: center;
+    }
+    .btn-update, .btn-remove {
+        padding: 8px 12px;
+        border-radius: 5px;
+        font-size: 0.9em;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .btn-update {
+        background-color: #000;
+        color: #fff;
+        border: none;
+    }
+    .btn-update:hover {
+        background-color: #333;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    .btn-remove {
+        background-color: #dc3545;
+        color: #fff;
+        border: none;
+    }
+    .btn-remove:hover {
+        background-color: #c82333;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    .cart-summary {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+        text-align: right;
+    }
+    .cart-summary h4 {
+        font-size: 1.5em;
+        font-weight: 700;
+        color: #333;
+    }
+    .cart-summary .total-amount {
+        font-size: 1.8em;
+        color: #000;
+        font-weight: 700;
+    }
+    .btn-checkout {
+        background-color: #000;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 15px 30px;
+        font-size: 1.2em;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        width: 100%;
+        max-width: 300px;
+        margin-top: 20px;
+    }
+    .btn-checkout:hover {
+        background-color: #ffc107;
+        color: #000;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+    .empty-cart-message {
+        text-align: center;
+        padding: 50px 0;
+        font-size: 1.2em;
+        color: #777;
+    }
+    .messages {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 20px;
+    }
+    .messages li {
+        padding: 10px 15px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        font-weight: 500;
+    }
+    .messages .success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+    .messages .info {
+        background-color: #d1ecf1;
+        color: #0c5460;
+        border: 1px solid #bee5eb;
+    }
+    .messages .error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+    @media (max-width: 768px) {
+        .cart-item {
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+        }
+        .cart-item-image {
+            margin-right: 0;
+            margin-bottom: 15px;
+        }
+        .cart-item-details {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        .cart-item-price {
+            width: 100%;
+            text-align: left;
+            margin-bottom: 15px;
+        }
+        .cart-item-actions {
+            width: 100%;
+            justify-content: flex-start;
+            margin-left: 0;
+        }
+        .btn-checkout {
+            max-width: 100%;
+        }
+    }
+</style>
+{% endblock extra_css %}
+
+{% block content %}
+    <main>
+        <div class="container cart-container">
+            <h2>Your Shopping Cart</h2>
+
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            {% if cart_items %}
+                {% for item in cart_items %}
+                    <div class="cart-item">
+                        <img src="{% static item.product.image %}" alt="{{ item.product.name }}" class="cart-item-image">
+                        <div class="cart-item-details">
+                            <h5>{{ item.product.name }}</h5>
+                            <p>Size: {{ item.size|default:"N/A" }}</p>
+                            <p>Quantity: {{ item.quantity }}</p>
+                        </div>
+                        <div class="cart-item-price">
+                            PKR {{ item.total_price|floatformat:2 }}
+                        </div>
+                        <div class="cart-item-actions">
+                            <form action="{% url 'store:update_cart_item' item.id %}" method="post" class="d-flex align-items-center">
+                                {% csrf_token %}
+                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="form-control quantity-input me-2">
+                                <button type="submit" class="btn btn-update">Update</button>
+                            </form>
+                            <form action="{% url 'store:remove_from_cart' item.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-remove">Remove</button>
+                            </form>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <div class="cart-summary">
+                    <h4>Total: <span class="total-amount">PKR {{ total_cart_price|floatformat:2 }}</span></h4>
+                    <a href="{% url 'store:checkout' %}" class="btn btn-checkout">PROCEED TO CHECKOUT</a>
+                </div>
+            {% else %}
+                <p class="empty-cart-message">Your cart is empty. Start shopping now!</p>
+                <div class="text-center">
+                    <a href="{% url 'store:home' %}" class="btn btn-dark">Continue Shopping</a>
+                </div>
+            {% endif %}
+        </div>
+    </main>
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+    // Any specific JavaScript for the cart page can go here.
+</script>
+{% endblock extra_js %}

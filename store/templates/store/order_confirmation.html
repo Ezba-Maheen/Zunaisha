@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Order Confirmed - ZOHAN ARTS{% endblock %}
+{% block content %}
+    <main>
+        <div class="container text-center my-5" style="min-height: calc(100vh - 200px); display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 3em; color: #28a745; margin-bottom: 20px;">Order Placed Successfully!</h2>
+            <p style="font-size: 1.2em; color: #555;">Thank you for your purchase. Your order has been received and will be processed shortly.</p>
+            <p style="font-size: 1.1em; color: #777;"></p>
+            <a href="{% url 'store:home' %}" class="btn btn-dark mt-4" style="padding: 10px 25px; font-size: 1.1em; border-radius: 5px; background-color: #000; color: #fff;">Continue Shopping</a>
+        </div>
+    </main>
+{% endblock %}

@@ -1,0 +1,129 @@
+{% extends 'base.html' %} {# This line tells Django to inherit from base.html #}
+{% load static %} {# Still needed if you use 'static' tag directly in this template #}
+
+{% block title %}Privacy Policy - Zunaisha{% endblock %} {# Set page specific title #}
+
+{% block extra_css %}
+    {# Place page-specific CSS here. It will be injected into the <head> of base.html #}
+    <style>
+        body {
+            /* If base.html body has background-color/image, override or extend here */
+            background-color: #f8f9fa; /* Override base body background if needed */
+            padding: 20px; /* Keep padding */
+        }
+        .policy-container {
+            max-width: 960px;
+            margin: 40px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+        }
+        .header-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .header-section .back-arrow {
+            font-size: 1.5rem;
+            color: #343a40;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+        .header-section h1 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #343a40;
+            margin: 0;
+            text-align: center;
+            flex-grow: 1;
+        }
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #343a40;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        .content-text {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .content-list {
+            list-style-type: lower-roman; /* For (i), (ii) */
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        .content-list li {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    {# All the unique HTML content for the Privacy Policy page goes here #}
+    <div class="policy-container">
+        <div class="header-section">
+            <i class="fas fa-arrow-left back-arrow" onclick="history.back()"></i>
+            <h1>Privacy Policy</h1>
+            <div></div>
+        </div>
+
+        <p class="content-text">
+            We respect the privacy rights of our online visitors and recognize the importance of protecting your personal information. We have adopted a corporate wide privacy policy that guides how we collect, store, and use the information that you provide us with. The following information is provided by Zunaisha by Zohan Arts to enable our online visitors to be fully informed of our privacy policies. By visiting zunaishabyzohanarts.com, you are accepting and consenting to the practices described in this privacy policy and the terms and conditions.
+        </p>
+
+        <h2 class="section-title">WHAT PERSONAL INFORMATION DO WE COLLECT FROM YOU AND HOW?</h2>
+        <p class="content-text">
+            Zunaisha by Zohan Arts collects personal information in several ways when you place an order or register for a service offered by Zunaisha by Zohan Arts. By registering, you are consenting to the collection of your personal data. If an order is placed with us, we need to hold personal information including your name, email address, phone numbers, home address, shipping and credit/debit card billing address(es) so that we can process and fulfill your order. Saved card details will never be shared with third parties and will only be used to process your order, using our payment service provider's systems.
+        </p>
+
+        <h2 class="section-title">HOW THIS INFORMATION MAY BE USED, INCLUDING ANYONE IT MIGHT BE SHARED WITH?</h2>
+        <p class="content-text">
+            Zunaisha by Zohan Arts may use your personal information for the processing of orders, payments, and to provide you with a personalized shopping experience. We will also use your details to fulfill and deliver your orders and manage your account. Personal information that you provide may be disclosed to a credit reference or fraud prevention agency, which may keep a record of that information. We may also use your personal information to send you marketing updates but only ever in accordance with your preferences (as detailed in the next section). We do not sell your details to third party marketing companies.
+        </p>
+        <p class="content-text">
+            We do collate information about site traffic, sales, wish list, and other commercial information which we may pass on to third parties but this information does not include any information which can identify you personally.
+        </p>
+        <p class="content-text">
+            Finally, we may use your personal information for our internal marketing and demographic studies, together with non-personal data to monitor customer patterns so we can consistently improve our site design to better meet our visitors' needs.
+        </p>
+
+        <h2 class="section-title">MARKETING OPT-IN AND OPT-OUT PROVISION</h2>
+        <p class="content-text">
+            When you register, you will be given the option to opt-out of subscribing to our regular update service which will send you:
+        </p>
+        <ul class="content-list">
+            <li>email alerts for new products, features, enhancements, special offers, upgrade opportunities, contests, events of interest, and one-off marketing promotions.</li>
+            <li>direct mail alerts for new products, features, enhancements, special offers, upgrade opportunities, contests, events of interest, and one-off marketing promotions.</li>
+        </ul>
+        <p class="content-text">
+            We do not sell or otherwise pass your details to third parties for marketing purposes. Marketing communications
+        </p>
+        <p class="content-text">
+            At all times, we will offer you the opportunity to unsubscribe out of any service or update to which you have subscribed. If you change your mind, Any e-mail we send you will contain an easy automated unsubscribe link so that you can opt-out of that particular mail shot. Simply follow the indications in the e-mail. Alternatively, you can change your email preferences or opt out of all emails by logging into my account. To opt out of direct mail service or updates, please contact Zunaisha by Zohan Arts customer care representative on +92-321-083500-0 (from a mobile or internationally) or by email at zunaishaclothing@gmail.com
+        </p>
+
+        <h2 class="section-title">HOW YOU CAN ACCESS AND, IF NECESSARY, CHANGE THE PERSONAL INFORMATION ZUNAISHA BY ZOHAN ARTS MAINTAINS</h2>
+        <p class="content-text">
+            If for any reason you are concerned that the personal information held by Zunaisha by Zohan Arts is not correct, please visit the website and after logging into the site using the "sign in" menu on the home page, your personal information will be made available for review and change in the "my account" section. Only you or, upon your request, the customer care department, may access your personal data from the website using your password and user id. Information may be changed online within account details, address book, and my email preferences. You can change or delete saved credit/debit card details each time you make a purchase. You will also be able to delete saved credit/debit card details by adding or editing a shipping/billing address. If you change your billing or shipping address while your order is still being processed, the order will be re-processed through security validation checks. If you prefer, you may contact us by email at online@zunaishabyzohanarts.com and we will amend your personal details.
+        </p>
+
+        <h2 class="section-title">SAFEGUARDING YOUR PERSONALLY IDENTIFIABLE INFORMATION</h2>
+        <p class="content-text">
+            We will take reasonable steps to maintain appropriate safeguards to ensure the security, integrity and privacy of the information you have provided us with. When you place an order or access your account information, we use a secure socket layer (ssl) encryption which encrypts your information before it is sent to us, to protect it from unauthorized use. In addition, we will take reasonable steps to ensure that third party business partners' to whom we transfer any data will provide sufficient protection of that personal information.
+        </p>
+
+        <h2 class="section-title">WHERE AND HOW TO ASK QUESTIONS OR FILE COMPLAINTS</h2>
+        <p class="content-text">
+            If you require further information about our privacy policy, please go to the contact us section of the web site.
+        </p>
+    </div>
+{% endblock %}
+
+{# No extra_js needed for this specific page, as history.back() is inline #}

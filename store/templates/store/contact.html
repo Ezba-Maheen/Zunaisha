@@ -1,0 +1,345 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #2c3e50; /* Dark background color */
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            /* Added background image */
+            background-image: url('{% static "images/logo.jpg" %}'); /* Use Django static tag here */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Keeps background fixed when scrolling */
+        }
+        .contact-section {
+            /* Removed background-color, border-radius, and box-shadow to remove the main box */
+            padding: 40px; /* Keep padding for content spacing */
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+        }
+        .contact-section h1 {
+            font-size: 2.8rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        .contact-section .description {
+            font-size: 1rem;
+            color: white;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+        .contact-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+        .contact-info-column {
+            flex: 1;
+            min-width: 300px; /* Minimum width for contact info column */
+            text-align: left;
+            padding-right: 20px; /* Space between columns */
+        }
+        .contact-info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .contact-info-item .icon-wrapper {
+            background-color: black; /* Green circle background for icons */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: #fff;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        .contact-info-item .info-text {
+            font-size: 1rem;
+            color: #ecf0f1;
+            line-height: 1.4;
+        }
+        .contact-info-item .info-text strong {
+            display: block;
+            font-size: 1.1rem;
+            margin-bottom: 3px;
+            color: #fff;
+        }
+        .contact-form-column {
+            flex: 1;
+            min-width: 300px; /* Minimum width for form column */
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            text-align: left;
+        }
+        .contact-form-column h2 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #343a40;
+            margin-bottom: 25px;
+        }
+        .contact-form-column .form-control {
+            border: none; /* No border for input fields */
+            border-bottom: 1px solid #ccc; /* Only bottom border */
+            border-radius: 0;
+            padding: 10px 0;
+            background-color: transparent;
+            color: #343a40;
+            font-size: 1rem;
+            margin-bottom: 25px;
+        }
+        .contact-form-column .form-control:focus {
+            box-shadow: none;
+            border-color: black; /* Blue on focus */
+            outline: none;
+        }
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .btn-send {
+            background-color: black; /* Teal color for send button */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%; /* Full width button */
+        }
+        .btn-send:hover {
+            background-color: yellow;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 767.98px) {
+            .contact-section {
+                padding: 20px;
+            }
+            .contact-section h1 {
+                font-size: 2rem;
+            }
+            .contact-info-column {
+                padding-right: 0;
+                margin-bottom: 30px; /* Space between info and form on small screens */
+            }
+            .contact-form-column {
+                padding: 20px;
+            }
+            .contact-content {
+                flex-direction: column; /* Stack columns on small screens */
+            }
+        }
+
+        /* Styles for messages */
+        .contact-message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none; /* Hidden by default */
+            font-size: 0.9em;
+            text-align: center; /* Center the message text */
+        }
+        .contact-message.text-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .contact-message.text-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    {# load static already at the top #} 
+
+    <div class="contact-section">
+        <h1>Contact Us</h1>
+        <p class="description">
+            Feel free to contact us we are here to solve any inconvenience!
+        </p>
+
+        <div class="contact-content">
+            <div class="contact-info-column">
+                <div class="contact-info-item">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="info-text">
+                        <strong>Address</strong>
+                        A/B/C, Center Shop No#27 farshi bazar infront of UK Kashmiri center dhatti azam cloth market, Lahore
+                    </div>
+                </div>
+
+                <div class="contact-info-item">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="info-text">
+                        <strong>Phone</strong>
+                        <a href="tel:+923210835000" class="text-white text-decoration-none">(+92) 321 0835000</a>
+                    </div>
+                </div>
+
+                <div class="contact-info-item">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="info-text">
+                        <strong>Email</strong>
+                        <a href="mailto:zunaishaclothing@gmail.com" class="text-white text-decoration-none">zunaishaclothing@gmail.com</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form-column">
+                <h2>Send Message</h2>
+                {# Add an ID to the form #}
+                <form id="contact-form" method="post" action=""> {# action="" because JS will handle submission #}
+                    {% csrf_token %} {# Django's CSRF protection - ESSENTIAL for POST requests #}
+                    <div class="mb-4">
+                        {# Add name attributes for form.cleaned_data in Django view #}
+                        <input type="text" class="form-control" placeholder="Full Name" name="full_name" required>
+                    </div>
+                    <div class="mb-4">
+                        <input type="email" class="form-control" placeholder="Email" name="email" required>
+                    </div>
+                    <div class="mb-4">
+                        <textarea class="form-control" placeholder="Type your Message..." name="message" required></textarea>
+                    </div>
+                    {# Add an ID to the button to easily select it with JS #}
+                    <button type="submit" class="btn btn-send" id="contact-send-button">Send</button>
+                </form>
+                {# Div to display success/error messages #}
+                <div id="contact-message" class="contact-message"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {# Add your new JavaScript here #}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactForm = document.getElementById('contact-form');
+            const contactSendButton = document.getElementById('contact-send-button');
+            const contactMessageDiv = document.getElementById('contact-message');
+
+            // Get CSRF token from the hidden input within the form
+            const csrfTokenElement = contactForm ? contactForm.querySelector('input[name="csrfmiddlewaretoken"]') : null;
+            const csrfToken = csrfTokenElement ? csrfTokenElement.value : null;
+
+            // Basic check if elements are found
+            if (!contactForm || !contactSendButton || !contactMessageDiv || !csrfToken) {
+                console.error("Critical elements for contact form not found. Contact functionality might be impaired.");
+                if (contactMessageDiv) {
+                    contactMessageDiv.textContent = "Error: Contact form functionality not loaded.";
+                    contactMessageDiv.classList.add('text-danger');
+                    contactMessageDiv.style.display = 'block';
+                }
+                return; // Stop script execution if essential elements are missing
+            }
+
+            contactForm.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent default form submission
+
+                // Hide previous messages and clear content
+                contactMessageDiv.style.display = 'none';
+                contactMessageDiv.textContent = '';
+                contactMessageDiv.classList.remove('text-success', 'text-danger');
+
+                // Collect form data using FormData API
+                const formData = new FormData(contactForm); // This automatically gets all named inputs
+
+                // Disable button to prevent multiple submissions
+                contactSendButton.disabled = true;
+                contactSendButton.textContent = 'Sending...';
+
+                fetch('{% url "store:contact_form_submit" %}', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': csrfToken,
+                        // 'Content-Type': 'application/json', // Only if sending JSON
+                    },
+                    body: formData, // FormData works directly with fetch, sets Content-Type header automatically
+                })
+                .then(response => {
+                    // Re-enable button regardless of outcome
+                    contactSendButton.disabled = false;
+                    contactSendButton.textContent = 'Send';
+
+                    if (!response.ok) {
+                        // Attempt to parse JSON error, fallback to status text
+                        return response.json().catch(() => {
+                            throw new Error(`HTTP error! Status: ${response.status} - ${response.statusText}`);
+                        }).then(errorData => {
+                            // If Django returns form.errors.as_json(), parse it
+                            if (errorData.error) {
+                                try {
+                                    const errors = JSON.parse(errorData.error);
+                                    let errorMessages = [];
+                                    for (const field in errors) {
+                                        errors[field].forEach(err => {
+                                            errorMessages.push(`${field.replace(/_/g, ' ')}: ${err.message}`);
+                                        });
+                                    }
+                                    throw new Error(errorMessages.join('<br>')); // Join with <br> for HTML
+                                } catch (e) {
+                                    throw new Error(errorData.error); // Fallback if not Django's form error JSON
+                                }
+                            }
+                            throw new Error(errorData.message || `Server error: ${response.status}`);
+                        });
+                    }
+                    return response.json(); // Parse successful JSON response
+                })
+                .then(data => {
+                    if (data.success) {
+                        contactMessageDiv.textContent = data.message;
+                        contactMessageDiv.classList.add('text-success');
+                        contactForm.reset(); // Clear the form on success
+                    } else {
+                        // Display error message from the server
+                        contactMessageDiv.innerHTML = data.error || 'Failed to send message. Please try again.';
+                        contactMessageDiv.classList.add('text-danger');
+                    }
+                    contactMessageDiv.style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error during contact form submission:', error);
+                    contactMessageDiv.innerHTML = 'An unexpected error occurred. Please try again later.';
+                    contactMessageDiv.classList.add('text-danger');
+                    contactMessageDiv.style.display = 'block';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

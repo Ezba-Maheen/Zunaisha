@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Embroidered Pret Vol-II '25 - ZOHAN ARTS{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Custom CSS for Card Styling (reused from premium.html for consistency) */
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: #f8f9fa; /* Light background for the page */
+        margin: 0;
+        padding: 20px 0; /* Add some vertical padding to the body */
+    }
+
+    /* Keyframe for fade-in animation (already in base.html, but kept here if you had specific overrides) */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .card-wrapper {
+        /* Ensures the entire clickable area is the card */
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        height: 100%; /* Important for consistent card heights in a row */
+    }
+
+    .product-card {
+        border: none; /* Remove default Bootstrap card border */
+        border-radius: 8px; /* Slightly rounded corners for the card */
+        overflow: hidden; /* Ensures content stays within rounded corners */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Initial subtle shadow */
+        transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
+        height: 100%; /* Ensures card takes full height of its column */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .product-card:hover {
+        transform: translateY(-8px); /* Lift card slightly on hover */
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2); /* More pronounced shadow on hover */
+        cursor: pointer;
+    }
+
+    .card-img-top {
+        width: 100%;
+        /* The images in your screenshot look roughly 4:5 or 3:4 aspect ratio (width:height). */
+        /* Setting a fixed height and object-fit: cover ensures consistency. */
+        height: 500px; /* Adjust this to control image height and card overall size */
+        object-fit: cover; /* Ensures images cover the area without distortion */
+        border-bottom: 1px solid #eee; /* Small separator below image */
+    }
+
+    .card-body {
+        padding: 1rem; /* Adjust padding inside the card body */
+        text-align: center; /* Center align text as in the image */
+        flex-grow: 1; /* Allows body to take up remaining space */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* Pushes content to top/bottom if needed */
+    }
+
+    .product-code {
+        font-size: 0.95em; /* Slightly smaller for the code */
+        font-weight: 500; /* Medium weight */
+        color: #555;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+    }
+
+    .price-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Center prices */
+        margin-top: 0.5rem;
+    }
+
+    .current-price {
+        font-size: 1.35em; /* Larger and bolder for current price */
+        font-weight: 700; /* Bold */
+        color: #333;
+        margin-bottom: 0.2rem;
+    }
+
+    .original-price {
+        font-size: 0.9em; /* Smaller for original price */
+        font-weight: 400; /* Normal weight */
+        color: #999;
+        text-decoration: line-through; /* Strikethrough effect */
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 991.98px) { /* For tablets and smaller */
+        .card-img-top {
+            height: 300px; /* Adjust height for medium screens */
+        }
+        .current-price {
+            font-size: 1.2em;
+        }
+        .original-price {
+            font-size: 0.85em;
+        }
+    }
+
+    @media (max-width: 767.98px) { /* For mobile phones */
+        .card-img-top {
+            height: 250px; /* Adjust height for small screens */
+        }
+        .current-price {
+            font-size: 1.1em;
+        }
+        .original-price {
+            font-size: 0.8em;
+        }
+        /* WhatsApp float is handled in base.html for responsiveness */
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <br> {# Keep the br tags if you want extra space before the content starts #}
+    <br>
+
+    <div class="container my-5">
+        <h2 class="text-center mb-4" style="font-family: 'Playfair Display', serif; font-size: 2.5em; letter-spacing: 0.1em; text-transform: uppercase;">EMBROIDERED PRET VOL-II '25 COLLECTION</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
+
+            {% for product in products %}
+            <div class="col d-flex">
+                <a href="{% url 'product_detail' product.id %}" class="card-wrapper">
+                    <div class="card product-card">
+                        {% if product.image %}
+                            <img src="{% static product.image %}" class="card-img-top" alt="{{ product.name }}">
+                        {% else %}
+                            <img src="{% static 'images/placeholder.jpg' %}" class="card-img-top" alt="No Image">
+                        {% endif %}
+                        <div class="card-body">
+                            <div class="text-content">
+                                <div class="product-code">{{ product.name }}</div> {# Assuming product_code field exists #}
+                                <div class="price-section">
+                                    <div class="current-price">PKR {{ product.price|floatformat:2 }}</div>
+                                    {% if product.original_price %} {# Assuming original_price field exists for sale items #}
+                                        <div class="original-price">PKR {{ product.original_price|floatformat:2 }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p>No products available in the "Embroidered Pret Vol-II '25" collection yet. Please add some in the Django admin!</p>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+    <br><br>
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+    // Any JavaScript specific to epv2.html goes here.
+</script>
+{% endblock %}

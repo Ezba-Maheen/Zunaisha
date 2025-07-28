@@ -1,0 +1,477 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Product Detail - {{ product.name }} - ZOHAN ARTS{% endblock %} {# Dynamic title #}
+
+{% block extra_css %}
+<style>
+    /* Main content area padding */
+    main {
+        padding: 20px;
+    }
+
+    /* Product Detail Page Specific Styles */
+    .product-detail-section {
+        background-color: transparent;
+        border-radius: 8px;
+        box-shadow: none;
+    }
+
+    .main-product-image-container {
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+        margin-bottom: 20px;
+    }
+
+    .main-product-image-container:hover {
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    #mainProductImage {
+        width: 100%;
+        height: auto;
+        max-height: 600px;
+        object-fit: contain;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    .thumbnail-gallery {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .thumbnail-item {
+        width: 100px;
+        height: auto;
+        max-height: 120px;
+        border: 2px solid #eee;
+        border-radius: 5px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .thumbnail-item:hover {
+        border-color: #ffc107;
+        transform: translateY(-3px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .thumbnail-item.active {
+        border-color: #ffc107;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .thumbnail-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+    }
+
+    .product-info {
+        padding-left: 20px;
+    }
+
+    .product-info h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5em;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .product-price {
+        font-size: 1.8em;
+        font-weight: 600;
+        color: #000;
+        margin-bottom: 5px;
+    }
+
+    .original-price {
+        text-decoration: line-through;
+        color: #888;
+        font-size: 0.9em;
+        margin-left: 10px;
+    }
+
+    .product-meta {
+        font-size: 0.9em;
+        color: #777;
+        margin-bottom: 20px;
+    }
+
+    .product-description {
+        font-size: 1em;
+        line-height: 1.6;
+        color: #444;
+        margin-bottom: 30px;
+        text-align: justify;
+    }
+
+    .size-buttons-container {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+
+    .size-button {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        color: #333;
+        padding: 8px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    .size-button:hover {
+        background-color: #ffc107;
+        border-color: #ffc107;
+        color: #000;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .size-button.active {
+        background-color: #000;
+        color: #fff;
+        border-color: #000;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .quantity-input-container {
+        margin-bottom: 20px;
+    }
+
+    .quantity-input {
+        width: 80px;
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        text-align: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .quantity-input:focus {
+        box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+        border-color: #ffc107;
+        outline: none;
+    }
+
+    .add-to-cart-form {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .add-to-cart-btn {
+        background-color: #000;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 12px 25px;
+        font-size: 1.1em;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        cursor: pointer;
+    }
+
+    .add-to-cart-btn:hover {
+        background-color: #ffc107;
+        color: #000;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .size-chart-btn {
+        background-color: #f0f0f0;
+        color: #333;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 12px 25px;
+        font-size: 1.1em;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        width: 100%;
+        cursor: pointer;
+    }
+
+    .size-chart-btn:hover {
+        background-color: #ffc107;
+        color: #000;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .shipping-info {
+        font-size: 0.9em;
+        color: #666;
+        margin-top: 20px;
+        border-top: 1px solid #eee;
+        padding-top: 15px;
+    }
+
+    .social-share-icons {
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px solid #eee;
+    }
+    .social-share-icons a {
+        font-size: 1.5em;
+        margin-right: 15px;
+        color: #555;
+        transition: color 0.2s ease, transform 0.2s ease;
+    }
+    .social-share-icons a:hover {
+        color: #ffc107;
+        transform: scale(1.1);
+    }
+
+    @media (max-width: 991.98px) {
+        #mainProductImage {
+            height: 450px;
+        }
+        .thumbnail-gallery {
+            justify-content: flex-start;
+        }
+        .thumbnail-item {
+            width: 80px;
+            max-height: 100px;
+        }
+        .product-info {
+            padding-left: 0;
+            padding-top: 20px;
+        }
+        .product-info h1, .product-price, .product-meta,
+        .product-description, .size-selection, .shipping-info {
+            text-align: center;
+        }
+        .size-buttons-container {
+            justify-content: center;
+        }
+        .add-to-cart-form, .size-chart-btn {
+            width: 100%;
+            margin-top: 15px;
+        }
+        .social-share-icons {
+            text-align: center;
+            margin-top: 20px;
+        }
+    }
+
+    @media (max-width: 767.98px) {
+        .product-detail-section {
+            padding: 20px 0;
+        }
+        #mainProductImage {
+            height: 350px;
+        }
+        .thumbnail-gallery {
+            justify-content: center;
+        }
+        .thumbnail-item {
+            width: 70px;
+            max-height: 90px;
+        }
+        .product-info h1 {
+            font-size: 1.8em;
+        }
+        .product-price {
+            font-size: 1.3em;
+        }
+    }
+</style>
+{% endblock extra_css %}
+
+{% block content %}
+    <main>
+        <div class="container product-detail-section">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="main-product-image-container">
+                        <!-- Main product image - now dynamically sourced -->
+                        <a id="mainImageLink" href="{% if product.image %}{% static product.image %}{% else %}{% static 'images/placeholder.png' %}{% endif %}" target="_blank" aria-label="View larger image">
+                            <img id="mainProductImage" src="{% if product.image %}{% static product.image %}{% else %}{% static 'images/placeholder.png' %}{% endif %}" alt="{{ product.name }} Main Image">
+                        </a>
+                    </div>
+                    <div class="thumbnail-gallery">
+                        {# Display primary product image as first thumbnail #}
+                        <div class="thumbnail-item active" data-image="{% if product.image %}{% static product.image %}{% else %}{% static 'images/placeholder.png' %}{% endif %}">
+                            <img src="{% if product.image %}{% static product.image %}{% else %}{% static 'images/placeholder.png' %}{% endif %}" alt="{{ product.name }} Thumbnail 1">
+                        </div>
+                        {# Dynamic additional thumbnail images #}
+                        {% if product.thumbnail_image2 %}
+                        <div class="thumbnail-item" data-image="{% static product.thumbnail_image2 %}">
+                            <img src="{% static product.thumbnail_image2 %}" alt="{{ product.name }} Thumbnail 2">
+                        </div>
+                        {% endif %}
+                        {% if product.thumbnail_image3 %}
+                        <div class="thumbnail-item" data-image="{% static product.thumbnail_image3 %}">
+                            <img src="{% static product.thumbnail_image3 %}" alt="{{ product.name }} Thumbnail 3">
+                        </div>
+                        {% endif %}
+                        {% if product.thumbnail_image4 %}
+                        <div class="thumbnail-item" data-image="{% static product.thumbnail_image4 %}">
+                            <img src="{% static product.thumbnail_image4 %}" alt="{{ product.name }} Thumbnail 4">
+                        </div>
+                        {% endif %}
+                        {% if product.thumbnail_image5 %}
+                        <div class="thumbnail-item" data-image="{% static product.thumbnail_image5 %}">
+                            <img src="{% static product.thumbnail_image5 %}" alt="{{ product.name }} Thumbnail 5">
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-lg-6 product-info">
+                    <!-- Side Section Content -->
+                    {% if product.sku %}
+                    <p class="text-muted small text-start">{{ product.sku }}</p> {# Dynamic SKU #}
+                    {% endif %}
+                    <p class="product-price text-start">PKR {{ product.price|floatformat:2 }}
+                        {% if product.original_price %}
+                        <span class="original-price">PKR {{ product.original_price|floatformat:2 }}</span> {# Dynamic Original Price #}
+                        {% endif %}
+                    </p>
+                    <p class="text-muted small text-start">Shipping calculated at checkout.</p>
+
+                    <hr>
+
+                    <h1 class="mb-3 text-start">{{ product.name }}</h1> {# Dynamic product name #}
+
+                    <div class="size-selection mb-4 text-start">
+                        <label for="sizeSelect">Size:</label>
+                        <div class="size-buttons-container">
+                            <button class="size-button" data-size="S" aria-label="Select Small Size">S</button>
+                            <button class="size-button active" data-size="M" aria-label="Select Medium Size">M</button>
+                            <button class="size-button" data-size="L" aria-label="Select Large Size">L</button>
+                            <button class="size-button" data-size="XL" aria-label="Select Extra Large Size">XL</button>
+                        </div>
+                    </div>
+
+                    <div class="quantity-input-container text-start">
+                        <label for="quantityInput">Quantity:</label>
+                        <input type="number" id="quantityInput" class="form-control quantity-input" value="1" min="1" aria-label="Product Quantity">
+                    </div>
+
+                    <div class="d-grid gap-2 mb-4">
+                        <!-- Add to Cart Form - Corrected to send dynamic product_id, quantity, and size -->
+                        <form method="POST" action="{% url 'store:add_to_cart' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="product_id" value="{{ product.id }}">
+                            <input type="hidden" name="quantity" id="hiddenQuantityInput" value="1">
+                            <input type="hidden" name="selected_size" id="hiddenSelectedSize" value="M">
+                            <button type="submit" class="btn add-to-cart-btn">
+                                <i class="fas fa-shopping-bag"></i> Add to Cart
+                            </button>
+                        </form>
+                        <!-- Size Chart Button with Link -->
+                        <a href="{% static 'images/s.png' %}" class="btn-link-wrapper" target="_blank">
+                            <button class="btn size-chart-btn" aria-label="View Size Chart">Size Chart</button>
+                        </a>
+                    </div>
+
+                    <p class="shipping-info text-start">Local delivery: 3 to 5 working days</p>
+                    <p class="shipping-info text-start">International delivery: 6 to 8 working days</p>
+
+                    <hr>
+
+                    <p class="product-description">
+                        {{ product.description }} {# Dynamic product description #}
+                    </p>
+                    {% if product.shirt_fabric %}
+                    <p class="product-description">Shirt {{ product.shirt_fabric }}</p> {# Dynamic Shirt Fabric #}
+                    {% endif %}
+                    {% if product.trouser_fabric %}
+                    <p class="product-description">Trouser {{ product.trouser_fabric }}</p> {# Dynamic Trouser Fabric #}
+                    {% endif %}
+                    {% if product.dupatta_fabric %}
+                    <p class="product-description">Dupatta {{ product.dupatta_fabric }}</p> {# Dynamic Dupatta Fabric #}
+                    {% endif %}
+
+                    <div class="social-share-icons mt-4">
+                        <a href="https://www.facebook.com/share/16t5RYifVW/" aria-label="Share on Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/zunaisha_09876?igsh=OGsxNmxpbWg2OTUz" aria-label="Share on instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const mainProductImage = document.getElementById('mainProductImage');
+        const mainImageLink = document.getElementById('mainImageLink');
+        const thumbnailItems = document.querySelectorAll('.thumbnail-item');
+        const sizeButtons = document.querySelectorAll('.size-button');
+        const quantityInput = document.getElementById('quantityInput');
+        const hiddenQuantityInput = document.getElementById('hiddenQuantityInput');
+        const hiddenSelectedSize = document.getElementById('hiddenSelectedSize');
+
+        // Set initial href for the main image link
+        if (mainImageLink && mainProductImage) {
+            mainImageLink.href = mainProductImage.src;
+        }
+
+        // Function to update main image from thumbnails
+        thumbnailItems.forEach(item => {
+            item.addEventListener('click', function() {
+                thumbnailItems.forEach(thumb => thumb.classList.remove('active'));
+                this.classList.add('active');
+                mainProductImage.src = this.dataset.image;
+                if (mainImageLink) {
+                    mainImageLink.href = mainProductImage.src; // Use mainProductImage.src as it's already updated
+                }
+            });
+        });
+
+        // Function to handle size button selection and update hidden input
+        sizeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                sizeButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                const selectedSize = this.dataset.size;
+                if (hiddenSelectedSize) {
+                    hiddenSelectedSize.value = selectedSize;
+                }
+                console.log('Selected size:', selectedSize);
+            });
+        });
+
+        // Update hidden quantity input when quantity changes
+        if (quantityInput && hiddenQuantityInput) {
+            quantityInput.addEventListener('change', function() {
+                hiddenQuantityInput.value = this.value;
+                console.log('Quantity changed to:', this.value);
+            });
+        }
+
+        // Set initial values for hidden inputs based on default active elements
+        const initialActiveSizeButton = document.querySelector('.size-button.active');
+        if (initialActiveSizeButton && hiddenSelectedSize) {
+            hiddenSelectedSize.value = initialActiveSizeButton.dataset.size;
+        }
+        if (quantityInput && hiddenQuantityInput) {
+            hiddenQuantityInput.value = quantityInput.value;
+        }
+    });
+</script>
+{% endblock extra_js %}

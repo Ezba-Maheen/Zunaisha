@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mid Season sale</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts - Using Inter for a clean, modern sans-serif look similar to the image text -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for WhatsApp icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Custom CSS for Card Styling */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa; /* Light background for the page */
+            margin: 0;
+            padding: 20px 0; /* Add some vertical padding to the body */
+        }
+
+         .top-bar {
+            background-color: #000;
+            color: white;
+            font-size: 14px;
+            padding: 5px 10px;
+            text-align: center;
+        }
+
+       
+        /* Image reset (from your original code) */
+        img {
+            border-width: 0px;
+            border-style: none;
+            border-color: initial;
+            border-image: initial;
+            vertical-align: middle;
+        }
+
+        /* Navbar Customizations */
+        .navbar-nav {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex; /* Ensure flex for horizontal alignment */
+            justify-content: center; /* Center the main menu items */
+            gap: 20px; /* Space between main menu items */
+        }
+
+        .nav-item {
+            position: relative; /* Crucial for positioning dropdowns */
+        }
+
+        .nav-link {
+            font-size: 14px; /* Your original font size */
+            text-transform: uppercase;
+            text-decoration: none; /* Ensure no underline */
+            color: #333; /* Default text color */
+            padding: 10px 15px; /* Adjust padding as needed */
+            display: block; /* Make the whole link area clickable */
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #dbf835; /* Highlight on hover */
+        }
+
+        /* Dropdown Menu Styling (Sub-menus) */
+        .dropdown-menu {
+            display: none; /* Hidden by default */
+            position: absolute;
+            top: 100%; /* Position below the parent nav-item */
+            left: 0; /* Align with the left edge of the parent */
+            background-color: #ffffff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Shadow effect */
+            list-style: none;
+            margin: 0;
+            padding: 10px 0;
+            min-width: 220px; /* Adjust width as needed */
+            z-index: 1000; /* Ensure it appears above other content */
+            border-radius: 5px;
+            animation: fadeIn 0.3s ease-out; /* Smooth fade-in animation */
+        }
+
+        /* Sub-Sub-Menu (Nested Dropdown) Styling */
+        .dropdown-submenu {
+            position: relative; /* Needed for positioning its own dropdown */
+        }
+
+        .dropdown-submenu .dropdown-menu {
+            top: 0; /* Align with the top of the parent sub-menu item */
+            left: 100%; /* Position to the right of the parent sub-menu item */
+            margin-left: 5px; /* Small gap between sub-menu and sub-sub-menu */
+        }
+
+        .dropdown-item {
+            text-decoration: none;
+            color: #555;
+            padding: 8px 20px;
+            display: block;
+            font-size: 0.95em;
+            white-space: nowrap; /* Prevent text wrapping */
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        /* Show dropdown on hover */
+        .nav-item:hover > .dropdown-menu {
+            display: block !important; /* Added !important to force display */
+        }
+
+        .dropdown-submenu:hover > .dropdown-menu {
+            display: block !important; /* Added !important to force display */
+        }
+
+        /* Optional: Indicator for sub-sub-menu */
+        .dropdown-submenu .dropdown-item::after {
+            content: '►'; /* Right arrow indicator */
+            float: right;
+            margin-left: 10px;
+            font-size: 0.8em;
+            color: #999;
+        }
+        .dropdown-submenu .dropdown-item:not(:hover)::after {
+            content: ''; /* Hide arrow when not hovered */
+        }
+
+        /* Keyframe for fade-in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card-wrapper {
+            /* Ensures the entire clickable area is the card */
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            height: 100%; /* Important for consistent card heights in a row */
+        }
+
+        .product-card {
+            border: none; /* Remove default Bootstrap card border */
+            border-radius: 8px; /* Slightly rounded corners for the card */
+            overflow: hidden; /* Ensures content stays within rounded corners */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Initial subtle shadow */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
+            height: 100%; /* Ensures card takes full height of its column */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px); /* Lift card slightly on hover */
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2); /* More pronounced shadow on hover */
+            cursor: pointer;
+        }
+
+        .card-img-top {
+            width: 100%;
+            /* The images in your screenshot look roughly 4:5 or 3:4 aspect ratio (width:height). */
+            /* Setting a fixed height and object-fit: cover ensures consistency. */
+            height: 500px; /* Adjust this to control image height and card overall size */
+            object-fit: cover; /* Ensures images cover the area without distortion */
+            border-bottom: 1px solid #eee; /* Small separator below image */
+        }
+
+        .card-body {
+            padding: 1rem; /* Adjust padding inside the card body */
+            text-align: center; /* Center align text as in the image */
+            flex-grow: 1; /* Allows body to take up remaining space */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Pushes content to top/bottom if needed */
+        }
+
+        .product-code {
+            font-size: 0.95em; /* Slightly smaller for the code */
+            font-weight: 500; /* Medium weight */
+            color: #555;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .price-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center prices */
+            margin-top: 0.5rem;
+        }
+
+        .current-price {
+            font-size: 1.35em; /* Larger and bolder for current price */
+            font-weight: 700; /* Bold */
+            color: #333;
+            margin-bottom: 0.2rem;
+        }
+
+        .original-price {
+            font-size: 0.9em; /* Smaller for original price */
+            font-weight: 400; /* Normal weight */
+            color: #999;
+            text-decoration: line-through; /* Strikethrough effect */
+        }
+
+        /* WhatsApp floating button */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 40px;
+            right: 40px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 3px #999;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .whatsapp-float i {
+            margin-top: 0; /* Adjust icon vertical alignment */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 991.98px) { /* For tablets and smaller */
+            .card-img-top {
+                height: 300px; /* Adjust height for medium screens */
+            }
+            .current-price {
+                font-size: 1.2em;
+            }
+            .original-price {
+                font-size: 0.85em;
+            }
+        }
+
+        @media (max-width: 767.98px) { /* For mobile phones */
+            .card-img-top {
+                height: 250px; /* Adjust height for small screens */
+            }
+            .current-price {
+                font-size: 1.1em;
+            }
+            .original-price {
+                font-size: 0.8em;
+            }
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 25px;
+            }
+        }
+
+            .site-footer {
+    background: #f2f2f2;
+    color: #555;
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+  }
+  .footer-widgets {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 40px 10%;
+  }
+  .footer-col {
+    flex: 1 1 220px;
+    margin: 10px;
+  }
+  .footer-col h4 {
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  .icon-pin { font-size: 0.9em; vertical-align: middle; }
+
+  .footer-col p {
+    font-size: 0.875rem;
+    margin: 8px 0;
+  }
+  .links-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .links-list li {
+    margin: 6px 0;
+  }
+  .links-list a {
+    text-decoration: none;
+    color: #666;
+    font-size: 0.875rem;
+    transition: color 0.2s;
+  }
+  .links-list a:hover {
+    color: #000;
+  }
+.social-icons a {
+      display: inline-block;
+      transition: transform 0.2s ease, color 0.2s ease, filter 0.2s ease;
+    }
+    .social-icons a:hover {
+      transform: scale(1.2);
+      color: #0d6efd !important;        /* bootstrap primary blue */
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    }
+
+  .newsletter p {
+    font-size: 0.875rem;
+  }
+  .newsletter-form {
+    display: flex;
+    margin-top: 10px;
+    gap: 8px;
+  }
+  .newsletter-form input {
+    flex: 1;
+    padding: 8px 12px;
+    font-size: 0.875rem;
+    border: 1px solid #ccc;
+  }
+  .newsletter-form button {
+    padding: 8px 16px;
+    font-size: 0.875rem;
+    background: #000;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+  }
+
+  .footer-bottom {
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 10%;
+    font-size: 0.8rem;
+    color: #777;
+  }
+  .footer-bottom a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  @media (max-width: 768px) {
+    .footer-widgets {
+      flex-direction: column;
+      padding: 30px 5%;
+    }
+    .footer-bottom {
+      flex-direction: column;
+      gap: 8px;
+      text-align: center;
+    }
+  }
+    </style>
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        For Online Queries Call / Whatsapp: (+92) 0321 0835000 Email: wecarezohanarts@gmail.com
+    </div>
+    <br>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-top border-bottom">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="mainNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="page0.html">Embroidered Pret Vol-II '25</a></li>
+                    <li class="nav-item"><a class="nav-link" href="page2.html">Mid Season Sale</a></li>
+
+                    <!-- Ready to Wear Dropdown -->
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Ready to Wear</a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-submenu"><a href="javascript:void(0);" class="dropdown-item">Luxury Formals</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="link-reve-de-luxe-25.html" class="dropdown-item">Rêve de Luxe '25</a></li>
+                                    <li><a href="link-jeune-fille-24.html" class="dropdown-item">Jeune Fille '24</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu"><a href="javascript:void(0);" class="dropdown-item">Wedding Formals</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="link-wedding-formals-vol1-24.html" class="dropdown-item">Wedding Formals vol-1 '24</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu"><a href="javascript:void(0);" class="dropdown-item">Premium Pret</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="link-premium-pret-25.html" class="dropdown-item">Premium Pret '25</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu"><a href="javascript:void(0);" class="dropdown-item">Embroidered Pret</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="link-embroidered-pret-vol2-25.html" class="dropdown-item">Embroidered Pret vol-II '25</a></li>
+                                    <li><a href="link-embroidered-pret-25.html" class="dropdown-item">Embroidered Pret '25</a></li>
+                                    <li><a href="link-embroidered-pret-vol2-24.html" class="dropdown-item">Embroidered Pret vol-II '24</a></li>
+                                    <li><a href="link-embroidered-pret-24.html" class="dropdown-item">Embroidered Pret '24</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu"><a href="javascript:void(0);" class="dropdown-item">Basic Pret</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="link-basic-25-v2.html" class="dropdown-item">Basic 25-V2</a></li>
+                                    <li><a href="link-basics-25-v1.html" class="dropdown-item">Basics 25-V1</a></li>
+                                    <li><a href="link-basics-24-v3.html" class="dropdown-item">Basics 24-V3</a></li>
+                                    <li><a href="link-basics-24-v1.html" class="dropdown-item">Basics 24-V1</a></li>
+                                    <li><a href="link-basics-23-v2.html" class="dropdown-item">Basics 23-V2</a></li>
+                                    <li><a href="link-basics-23-v1.html" class="dropdown-item">Basics 23-V1</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu"><a href="javascript:void(0);" class="dropdown-item">Essentials</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="link-essentials-ss-25.html" class="dropdown-item">Essentials S/S '25</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- Couture Dropdown -->
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Couture</a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-submenu"><a href="javascript:void(0);" class="dropdown-item">Deluxe Couture</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="link-deluxe-couture-21.html" class="dropdown-item">Deluxe couture '21</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu"><a href="javascript:void(0);" class="dropdown-item">Bridal Couture</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="link-bridal-couture-24-25.html" class="dropdown-item">Bridal couture 24'25</a></li>
+                                    <li><a href="link-bridal-couture-22-23.html" class="dropdown-item">Bridal couture 22'23</a></li>
+                                    <li><a href="link-bridal-couture-21-22.html" class="dropdown-item">Bridal couture 21'22</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu"><a href="javascript:void(0);" class="dropdown-item">Wedding Couture</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="link-wedding-couture-23-24.html" class="dropdown-item">Wedding Couture 23'24</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu"><a href="javascript:void(0);" class="dropdown-item">Demi couture</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="link-mylene-23.html" class="dropdown-item">Myléne '23</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- Unstitched Dropdown -->
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Unstitched</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="link-talia-summer-lawn-2025.html" class="dropdown-item">Talia-Summer Lawn 2025</a></li>
+                            <li><a href="link-kalani-eid-luxury-lawn-2025.html" class="dropdown-item">KALANI - EID LUXURY LAWN 2025</a></li>
+                            <li><a href="link-rosalee-winter-unstitched-24.html" class="dropdown-item">Rosalee Winter Unstitched '24</a></li>
+                            <li><a href="link-pieno-de-verde-wedding-unstitched-24.html" class="dropdown-item">Pieno De Verde - Wedding Unstitched '24</a></li>
+                            <li><a href="link-aylin-unstitched-summer-lawn-24.html" class="dropdown-item">AYLIN UNSTITCHED SUMMER LAWN '24</a></li>
+                            <li><a href="link-ilana-eid-luxury-lawn-2024.html" class="dropdown-item">ILANA EID LUXURY LAWN 2024</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item"><a class="nav-link" href="#">Jewelry</a></li>
+
+                    <!-- Look Book Dropdown -->
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Look Book</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="link-basics-25-v2.html" class="dropdown-item">Basics 25-V2</a></li>
+                            <li><a href="link-talia-summer-lawn-2025.html" class="dropdown-item">Talia Summer Lawn 2025</a></li>
+                            <li><a href="link-essentials-ss-25.html" class="dropdown-item">Essentials S/S '25</a></li>
+                            <li><a href="link-embroidered-pret-25.html" class="dropdown-item">Embroidered Pret '25</a></li>
+                            <li><a href="link-reve-de-luxe-25.html" class="dropdown-item">Reve-de-Luxe-25</a></li>
+                            <li><a href="link-premium-pret-25.html" class="dropdown-item">Premium Pret 25</a></li>
+                            <li><a href="link-rosalee-winter-unstitched-24.html" class="dropdown-item">Rosalee Winter Unstitched 24</a></li>
+                            <li><a href="link-basics-v3-124.html" class="dropdown-item">Basics V3 124</a></li>
+                            <li><a href="link-pieno-de-verde-wedding-unstitched-24.html" class="dropdown-item">Pieno De Verde Wedding Unstitched '24</a></li>
+                            <li><a href="link-wedding-couture.html" class="dropdown-item">Wedding Couture</a></li>
+                            <li><a href="link-wedding-formals.html" class="dropdown-item">Wedding Formals</a></li>
+                            <li><a href="link-aylin-unstitched-summer-lawn.html" class="dropdown-item">Aylin Unstitched Summer Lawn</a></li>
+                            <li><a href="link-ilana-luxury-lawn.html" class="dropdown-item">Ilana Luxury Lawn</a></li>
+                            <li><a href="link-basics-v4-23.html" class="dropdown-item">Basics V4 '23</a></li>
+                            <li><a href="link-joie-de-vivre-wedding-unstitched-2023.html" class="dropdown-item">joie de vivre wedding unstitched 2023</a></li>
+                            <li><a href="link-mehroze-v2-23.html" class="dropdown-item">Mehroze V2 23</a></li>
+                            <li><a href="link-noemei-luxury-shawl-unstitched-2023.html" class="dropdown-item">Noemei Luxury Shawl Unstitched 2023</a></li>
+                            <li><a href="link-danayah-winter-unstitched-2022.html" class="dropdown-item">Danayah Winter Unstitched 2022</a></li>
+                            <li><a href="link-claire-de-lune-wedding-unstitched-22.html" class="dropdown-item">Claire de Lune Wedding Unstitched 22</a></li>
+                            <li><a href="link-premium-pret-vol-11-2022.html" class="dropdown-item">Premium-Pret-Vol-11-2022</a></li>
+                            <li><a href="link-demi-couture-22.html" class="dropdown-item">Demi Couture '22</a></li>
+                            <li><a href="link-heritage-bridal-21.html" class="dropdown-item">Heritage Bridal '21</a></li>
+                            <li><a href="link-vesfir-21.html" class="dropdown-item">Vesfir 21</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item"><a class="nav-link" href="#">Wishlist</a></li>
+                </ul>
+            </div>
+            <div class="d-none d-lg-flex">
+                <a href="#" class="icon-buttons"><i class="bi bi-truck"></i></a>
+                <a href="#" class="icon-buttons"><i class="bi bi-person"></i></a>
+                <a href="#" class="icon-buttons"><i class="bi bi-bag"></i></a>
+            </div>
+        </div>
+    </nav>
+<br>
+
+    <div class="container my-5">
+        <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
+
+            <!-- Card 1 -->
+            <div class="col d-flex">
+                <a href="product1.html" class="card-wrapper">
+                    <div class="card product-card">
+                        <img src="p23.jpeg" class="card-img-top" alt="Product M-146">
+                        <div class="card-body">
+                            <div class="text-content">
+                                <div class="product-code">M-146</div>
+                                <div class="price-section">
+                                    <div class="current-price">PKR 17,960</div>
+                                    <div class="original-price">PKR 22,450</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="col d-flex">
+                <a href="product2.html" class="card-wrapper">
+                    <div class="card product-card">
+                        <img src="p9.jpeg" class="card-img-top" alt="Product M-144">
+                        <div class="card-body">
+                            <div class="text-content">
+                                <div class="product-code">M-144</div>
+                                <div class="price-section">
+                                    <div class="current-price">PKR 18,360</div>
+                                    <div class="original-price">PKR 22,950</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="col d-flex">
+                <a href="product3.html" class="card-wrapper">
+                    <div class="card product-card">
+                        <img src="p8.jpeg" class="card-img-top" alt="Product M-143">
+                        <div class="card-body">
+                            <div class="text-content">
+                                <div class="product-code">M-143</div>
+                                <div class="price-section">
+                                    <div class="current-price">PKR 19,933</div>
+                                    <div class="original-price">PKR 24,450</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+<br>
+<div class="container my-5">
+        <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
+
+            <!-- Card 1 -->
+            <div class="col d-flex">
+                <a href="product4.html" class="card-wrapper">
+                    <div class="card product-card">
+                        <img src="p7.jpeg" class="card-img-top" alt="Product M-146">
+                        <div class="card-body">
+                            <div class="text-content">
+                                <div class="product-code">M-146</div>
+                                <div class="price-section">
+                                    <div class="current-price">PKR 17,960</div>
+                                    <div class="original-price">PKR 22,450</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="col d-flex">
+                <a href="product5.html" class="card-wrapper">
+                    <div class="card product-card">
+                        <img src="p6.jpeg" class="card-img-top" alt="Product M-144">
+                        <div class="card-body">
+                            <div class="text-content">
+                                <div class="product-code">M-144</div>
+                                <div class="price-section">
+                                    <div class="current-price">PKR 18,360</div>
+                                    <div class="original-price">PKR 22,950</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="col d-flex">
+                <a href="product6.html" class="card-wrapper">
+                    <div class="card product-card">
+                        <img src="p5.jpeg" class="card-img-top" alt="Product M-143">
+                        <div class="card-body">
+                            <div class="text-content">
+                                <div class="product-code">M-143</div>
+                                <div class="price-section">
+                                    <div class="current-price">PKR 19,933</div>
+                                    <div class="original-price">PKR 24,450</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </div>
+    <br>
+    <div class="container my-5">
+        <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
+
+            <!-- Card 1 -->
+            <div class="col d-flex">
+                <a href="product7.html" class="card-wrapper">
+                    <div class="card product-card">
+                        <img src="p9.jpeg" class="card-img-top" alt="Product M-146">
+                        <div class="card-body">
+                            <div class="text-content">
+                                <div class="product-code">M-146</div>
+                                <div class="price-section">
+                                    <div class="current-price">PKR 17,960</div>
+                                    <div class="original-price">PKR 22,450</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="col d-flex">
+                <a href="product8.html" class="card-wrapper">
+                    <div class="card product-card">
+                        <img src="p11.jpeg" class="card-img-top" alt="Product M-144">
+                        <div class="card-body">
+                            <div class="text-content">
+                                <div class="product-code">M-144</div>
+                                <div class="price-section">
+                                    <div class="current-price">PKR 18,360</div>
+                                    <div class="original-price">PKR 22,950</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="col d-flex">
+                <a href="product9.html" class="card-wrapper">
+                    <div class="card product-card">
+                        <img src="p15.jpeg" class="card-img-top" alt="Product M-143">
+                        <div class="card-body">
+                            <div class="text-content">
+                                <div class="product-code">M-143</div>
+                                <div class="price-section">
+                                    <div class="current-price">PKR 19,933</div>
+                                    <div class="original-price">PKR 24,450</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </div>
+    <br>
+    <div class="container my-5">
+        <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
+
+            <!-- Card 1 -->
+            <div class="col d-flex">
+                <a href="product10.html" class="card-wrapper">
+                    <div class="card product-card">
+                        <img src="p9.jpeg" class="card-img-top" alt="Product M-146">
+                        <div class="card-body">
+                            <div class="text-content">
+                                <div class="product-code">M-146</div>
+                                <div class="price-section">
+                                    <div class="current-price">PKR 17,960</div>
+                                    <div class="original-price">PKR 22,450</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="col d-flex">
+                <a href="product11.html" class="card-wrapper">
+                    <div class="card product-card">
+                        <img src="p9.jpeg" class="card-img-top" alt="Product M-144">
+                        <div class="card-body">
+                            <div class="text-content">
+                                <div class="product-code">M-144</div>
+                                <div class="price-section">
+                                    <div class="current-price">PKR 18,360</div>
+                                    <div class="original-price">PKR 22,950</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="col d-flex">
+                <a href="product12.html" class="card-wrapper">
+                    <div class="card product-card">
+                        <img src="g1.jpeg" class="card-img-top" alt="Product M-143">
+                        <div class="card-body">
+                            <div class="text-content">
+                                <div class="product-code">M-143</div>
+                                <div class="price-section">
+                                    <div class="current-price">PKR 19,933</div>
+                                    <div class="original-price">PKR 24,450</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </div>
+    <br><br>
+  <footer class="site-footer">
+  <div class="footer-widgets">
+    <div class="footer-col">
+      <h4>FIND US <span class="icon-pin">📍</span></h4>
+      <p><strong>Address:</strong><br>
+        A/B/C, Center Shop No#27 farshi bazar infront of UK Kashmiri center dhatti azam cloth market, Lahore</p>
+      <p>FOR CUSTOMER SERVICES : 11:00 AM TO 9:00 PM<br>
+         (MONDAY TO SATURDAY)<br>
+         (+92) 321 0835000</p>
+      <p><strong>For Online Order Inquiries:</strong><br>
+         (Pret & Unstitch)<br>
+         Call/WhatsApp: (+92) 321 0835000<br>
+         Email: wecare@zohanarts.com</p>
+      <p><strong>For Bridal Studio Appointments:</strong><br>
+         (+92) 321 0835000<br>
+         <strong>For Bridal Inquiries Only:</strong><br>
+         (+92) 321 0835000</p>
+
+    <div class="container text-center">
+      <div class="d-flex justify-content-center gap-3">
+        <a href="https://www.facebook.com/share/1GEhpLg8LM/" class="text-dark fs-3">
+          <i class="bi bi-facebook"></i>
+        </a>
+        <a href="https://www.instagram.com/zohanarts2025?igsh=OGsxNmxpbWg2OTUz" class="text-dark fs-3">
+          <i class="bi bi-instagram"></i>
+        </a>
+        <a href="tel:+923210835000" class="text-dark fs-3">
+          <i class="bi bi-telephone-fill"></i>
+        </a>
+        <a href="wecare@zohanarts@gmail.com" class="text-dark fs-3">
+          <i class="bi bi-envelope-fill"></i>
+        </a>
+        <a href="https://wa.me/923210835000" class="text-dark fs-3">
+          <i class="bi bi-whatsapp"></i>
+        </a>
+      </div>
+    </div>
+
+    </div>
+
+    <div class="footer-col">
+      <h4>STORE HOURS</h4>
+      <p><strong>MONDAY – SATURDAY:</strong><br>
+         11:00 AM – 10:00 PM</p>
+      <p><strong>SUNDAY:</strong><br>
+         2:00 PM – 9:00 PM</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>CUSTOMER SERVICES</h4>
+      <ul class="links-list">
+        <li><a href="#">Track Your Order</a></li>
+        <li><a href="#">FAQs</a></li>
+        <li><a href="#">Return & Exchange</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Shipping Policy</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">Stores</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col newsletter">
+      <h4>NEWSLETTER</h4>
+      <p>Promotions, new products and sales.<br>
+         Directly to your inbox.</p>
+      <form action="#" method="post" class="newsletter-form">
+        <input type="email" placeholder="Email address" required>
+        <button type="submit">SUBSCRIBE</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025. Republic Zohan Arts. All rights reserved</p>
+    <p>Developed by <a href="https://www.linkedin.com/in/ezba-maheen-1a997128a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">Ezba Maheen</a>  
+       Powered by <a href="https://xstak.example.com" target="_blank">XStak</a>
+    </p>
+  </div>
+</footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/923210835000" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

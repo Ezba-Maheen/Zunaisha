@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python/
+env/
+venv/  # Ignore your virtual environment folder
+*.env # Ignore .env files where secrets are stored
+
+# Django
+*.log
+*.pot
+*.mo
+db.sqlite3 # Ignore your SQLite database file (Django's default DB file name)
+media/     # Ignore user-uploaded media files
+static_root/ # Ignore collected static files
+staticfiles/ # Alias for static_root sometimes
+
+# IDE specific files (VS Code, PyCharm, etc.)
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Operating System files
+.DS_Store
+Thumbs.db
