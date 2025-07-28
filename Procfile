@@ -1,0 +1,1 @@
+web: gunicorn zunaisha.wsgi:application --log-file -
