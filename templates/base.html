@@ -43,25 +43,26 @@
             text-align: center;
         }
 
-        /* Logo Header - Updated for Left Alignment and Flexbox */
+        /* Logo Header - Updated for Left Alignment, Larger Size, and Flexbox */
         .logo-header {
             display: flex; /* Use flexbox for horizontal alignment */
             align-items: center; /* Vertically center items */
             justify-content: flex-start; /* Align items to the start (left) */
-            padding: 10px 20px; /* Add some padding around the header */
-            background-color: #f8f8f8; /* Keep existing color */
-            border-bottom: 1px solid #eeeeee; /* Keep existing border */
+            padding: 15px 20px; /* Increased padding to make header taller */
+            background-color: #f8f8f8;
+            border-bottom: 1px solid #eeeeee;
+            min-height: 100px; /* Ensure a minimum height for the header */
         }
 
-        /* Main Logo - Adjusted for Square Medium Size and Responsiveness */
+        /* Main Logo - Increased Size and Adjusted Margins */
         .main-logo {
-            width: 120px;   /* Medium square size for desktop */
-            height: 120px;
-            object-fit: contain; /* Ensures the entire image is visible within the square */
+            width: 150px;   /* Increased width for a larger logo */
+            height: 150px;  /* Increased height for a larger logo */
+            object-fit: contain;
             display: block;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border-radius: 5px; /* Keep existing */
-            margin-right: 15px; /* Add space between logo and text */
+            border-radius: 5px;
+            margin-right: 25px; /* Increased space between logo and text */
         }
 
         .main-logo:hover {
@@ -70,42 +71,65 @@
             cursor: pointer;
         }
 
-        /* Styles for the ZUNAISHA text beside the logo */
+        /* Styles for the ZUNAISHA text beside the logo - More Fancy Font & Larger */
         .site-title {
-            font-family: 'Playfair Display', serif; /* Apply Playfair Display font */
-            font-weight: 700; /* Make it bold */
-            font-size: 2.8em; /* Adjust size for prominence */
-            color: #333333; /* Dark color for the text */
-            text-transform: uppercase; /* All uppercase */
-            letter-spacing: 2px; /* Add some letter spacing */
-            white-space: nowrap; /* Prevent text from wrapping */
-            line-height: 1; /* Adjust line height for better vertical alignment */
+            font-family: 'Playfair Display', serif; /* Using Playfair Display for fancy look */
+            font-weight: 700; /* Bold */
+            font-size: 4em; /* Significantly larger font size */
+            color: #333333;
+            text-transform: uppercase;
+            letter-spacing: 3px; /* Increased letter spacing */
+            white-space: nowrap;
+            line-height: 1; /* Ensure tight vertical alignment */
+            padding-top: 5px; /* Small adjustment if needed for vertical alignment */
         }
 
-        /* Responsive adjustments for logo */
-        @media (max-width: 768px) {
+        /* Responsive adjustments for logo and title */
+        @media (max-width: 992px) { /* Adjust for medium screens (laptops/large tablets) */
             .main-logo {
-                width: 100px; /* Smaller on tablet */
+                width: 120px;
+                height: 120px;
+                margin-right: 20px;
+            }
+            .site-title {
+                font-size: 3em;
+                letter-spacing: 2px;
+            }
+            .logo-header {
+                min-height: 80px;
+                padding: 10px 15px;
+            }
+        }
+
+        @media (max-width: 768px) { /* Adjust for tablet screens */
+            .main-logo {
+                width: 100px;
                 height: 100px;
+                margin-right: 15px;
             }
             .site-title {
-                font-size: 2em; /* Smaller on tablet */
+                font-size: 2.2em;
+                letter-spacing: 1.5px;
             }
             .logo-header {
-                padding: 15px 10px; /* Adjust padding for smaller screens */
+                min-height: 70px;
+                padding: 10px;
             }
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 480px) { /* Adjust for mobile screens */
             .main-logo {
-                width: 80px; /* Even smaller on mobile */
+                width: 80px;
                 height: 80px;
+                margin-right: 10px;
             }
             .site-title {
-                font-size: 1.5em; /* Even smaller on mobile */
+                font-size: 1.8em;
+                letter-spacing: 1px;
             }
             .logo-header {
-                padding: 10px 5px; /* Adjust padding for mobile */
+                min-height: 60px;
+                padding: 8px;
             }
         }
 
@@ -394,7 +418,7 @@
             <a href="{% url 'store:index' %}"> {# Link logo to homepage #}
                 <img src="{% static 'wlogo.png' %}" alt="Your Company Logo" class="main-logo">
             </a>
-            <span class="site-title">ZUNAISHA</span> {# New: ZUNAISHA text beside the logo #}
+            <span class="site-title">ZUNAISHA BY ZOHAN ARTS</span> {# New: ZUNAISHA text beside the logo #}
         </div>
 
         <nav class="navbar navbar-expand-lg navbar-light bg-white border-top border-bottom">
@@ -588,7 +612,8 @@
                 <h4>STORE HOURS</h4>
                 <p><strong>MONDAY – SATURDAY:</strong><br>
                     11:00 AM – 10:00 PM</p>
-               
+                <p><strong>SUNDAY:</strong><br>
+                    2:00 PM – 9:00 PM</p>
             </div>
 
             <div class="footer-col">
