@@ -8,59 +8,62 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
-
-
 """
+
 import os
-from django.core.exceptions import ImproperlyConfigured 
-import dj_database_url
+import sys # Added for logging configuration
 from pathlib import Path
+from django.core.exceptions import ImproperlyConfigured
+import dj_database_url
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-DEBUG = os.environ.get('DEBUG_VALUE', 'False').lower() == 'true'
-# Required for Render to correctly interpret HTTPS requests when DEBUG=False
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-USE_X_FORWARDED_HOST = True
-CSRF_TRUSTED_ORIGINS = ['https://zunaisha.org', 'https://www.zunaisha.org', 'https://zunaisha-db.onrender.com']
 
-# … your existing settings …
-
-INTERNAL_IPS = [
-    "127.0.0.1",
-]
-
-
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
 if not SECRET_KEY:
     raise ImproperlyConfigured("The SECRET_KEY environment variable must be set for production.")
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [ BASE_DIR / "static" ]
-STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-STORAGES = {
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
-
-# Media files (user‑uploaded images)
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = os.environ.get('DEBUG_VALUE', 'False').lower() == 'true'
 
-
-# Strip spaces and filter out empty strings
+# Allowed Hosts for production
+# Render requires the onrender.com subdomain and your custom domains
 ALLOWED_HOSTS = [host.strip() for host in os.environ.get('ALLOWED_HOSTS', '').split(',') if host.strip()]
+# Ensure that if ALLOWED_HOSTS env var is empty, the list remains empty, not ['']
+if not ALLOWED_HOSTS and not DEBUG: # If in production and ALLOWED_HOSTS is not set, raise error
+    raise ImproperlyConfigured("ALLOWED_HOSTS environment variable must be set for production.")
+
+
+# --- Render Specific Settings (Crucial for Production) ---
+# Required for Render to correctly interpret HTTPS requests when DEBUG=False
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
+# CSRF_TRUSTED_ORIGINS should include your Render subdomain and custom domains
+CSRF_TRUSTED_ORIGINS = [
+    'https://zunaisha-db.onrender.com', # Your Render subdomain
+    'https://zunaisha.org',             # Your primary custom domain
+    'https://www.zunaisha.org',          # Your www custom domain
+]
+# Ensure these are only active in production when DEBUG is False
+if not DEBUG:
+    # Force all requests to use HTTPS
+    SECURE_SSL_REDIRECT = True
+    # HSTS settings (recommended for production)
+    SECURE_HSTS_SECONDS = 31536000  # 1 year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    # Ensure secure cookies
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    # Set a more secure X-Content-Type-Options header
+    SECURE_BROWSER_XSS_FILTER = True
+    X_FRAME_OPTIONS = 'DENY' # Prevents clickjacking by disabling iframing of your site
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -68,12 +71,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'store',
+    'store', # Your 'store' app
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', 
+    'django.middleware.security.SecurityMiddleware', # Must be at the top
+    'whitenoise.middleware.WhiteNoiseMiddleware', # Place after SecurityMiddleware
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -87,7 +90,7 @@ ROOT_URLCONF = 'zunaisha.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')], # Assuming you have a project-level 'templates' directory
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -105,21 +108,16 @@ WSGI_APPLICATION = 'zunaisha.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
 DATABASES = {
     'default': dj_database_url.config(
         default='sqlite:///db.sqlite3', # Fallback for local development
-        conn_max_age=600 # Optional: keeps database connections alive for a bit
+        conn_max_age=600 # Keeps database connections alive for a bit
     )
 }
-# Render will automatically provide a DATABASE_URL environment variable (e.g., postgres://user:pass@host:port/db)
-# which dj_database_url.config() will automatically parse and use.
-
 
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -138,30 +136,46 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/5.2/howto/static-files/
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [ BASE_DIR / "static" ] # Your project's static files
+STATIC_ROOT = BASE_DIR / 'staticfiles' # Where 'collectstatic' will gather them
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField' # Keep this line as is.
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
+# Media files (user-uploaded images)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# Default primary key field type
+# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Email settings (if you are using email in your app)
+# Ensure these environment variables are set on Render if you send emails
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com') # Gets host from env var, defaults to Gmail
-EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587)) # Gets port from env var, defaults to 587, converts to int
-EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True').lower() == 'true' # Gets TLS from env var, defaults to True
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER') # IMPORTANT: Get from environment variable
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') # IMPORTANT: Get from environment variable
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'zunaishaclothing@gmail.com') # Get from env var, default to your email
+EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True').lower() == 'true'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'zunaishaclothing@gmail.com')
 SERVER_EMAIL = DEFAULT_FROM_EMAIL # Important for Django's error reporting
 
-
-
+# Enhanced Logging Configuration for Production Debugging (Crucial to get tracebacks)
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -176,17 +190,17 @@ LOGGING = {
     },
     'handlers': {
         'console': {
-            'level': 'INFO', # Or 'DEBUG' for even more verbosity
+            'level': 'INFO', # Set to 'DEBUG' for even more verbosity if needed
             'class': 'logging.StreamHandler',
-            'formatter': 'verbose', # Use verbose formatter to get detailed output
-            # 'stream': sys.stdout, # Explicitly direct to stdout, though Render often captures by default
+            'formatter': 'verbose',
+            'stream': sys.stdout, # Explicitly direct to stdout for Render logs
         },
-        # You can add other handlers like 'mail_admins' here for production
+        # You can add a 'mail_admins' handler here for production, if ADMINS is configured
     },
     'loggers': {
         'django': {
             'handlers': ['console'],
-            'level': 'INFO', # Set to INFO or DEBUG to capture more
+            'level': 'INFO', # 'INFO' for general Django messages, 'DEBUG' for very verbose
             'propagate': False,
         },
         'django.request': { # Especially important for HTTP request errors
@@ -196,17 +210,22 @@ LOGGING = {
         },
         'zunaisha': { # Replace 'zunaisha' with your main Django app's name
             'handlers': ['console'],
-            'level': 'INFO', # Or 'DEBUG' for your own app's logs
+            'level': 'INFO', # For your own application's logs
             'propagate': False,
         },
         '': { # This is the root logger, captures everything not handled by others
             'handlers': ['console'],
-            'level': 'INFO', # Or 'DEBUG' for maximum logging
+            'level': 'INFO', # Global fallback level, ensures all unhandled messages go to console
             'propagate': True,
         },
     },
-    'root': {
+    'root': { # Ensures any root level logs also go to console
         'handlers': ['console'],
-        'level': 'INFO', # Global fallback level
+        'level': 'INFO',
     },
 }
+
+# Optional: Internal IPs for Django Debug Toolbar (only if you use it in dev)
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
