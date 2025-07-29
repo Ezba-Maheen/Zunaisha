@@ -16,7 +16,7 @@ from django.core.exceptions import ImproperlyConfigured
 import dj_database_url
 from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
-DEBUG = os.environ.get('DEBUG_VALUE', 'False').lower() == 'true'
+DEBUG = True
 # Required for Render to correctly interpret HTTPS requests when DEBUG=False
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 USE_X_FORWARDED_HOST = True
