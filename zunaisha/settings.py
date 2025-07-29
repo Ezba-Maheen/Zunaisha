@@ -55,9 +55,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # SECURITY WARNING: don't run with debug turned on in production!
 
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')
-if '' in ALLOWED_HOSTS: # Remove empty string if it results from splitting an empty env var
-    ALLOWED_HOSTS.remove('')
+# Strip spaces and filter out empty strings
+ALLOWED_HOSTS = [host.strip() for host in os.environ.get('ALLOWED_HOSTS', '').split(',') if host.strip()]
 
 
 # Application definition
