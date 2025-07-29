@@ -13,12 +13,14 @@ import os
 import dj_database_url
 from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
-DEBUG = os.environ.get('DEBUG_VALUE', 'False').lower() == 'true'
+DEBUG = True
 
 
 # … your existing settings …
 
-
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 
 
 
