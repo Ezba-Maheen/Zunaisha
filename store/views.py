@@ -19,6 +19,7 @@ from .forms import NewsletterSubscriptionForm,  ContactForm
 print("***** VIEWS.PY HAS BEEN RELOADED! *****")
 logger = logging.getLogger(__name__)
 
+
 def contact_form_submit(request):
     if request.method == 'POST':
         try:

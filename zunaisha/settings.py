@@ -19,7 +19,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG = os.environ.get('DEBUG_VALUE', 'False').lower() == 'true'
 # Required for Render to correctly interpret HTTPS requests when DEBUG=False
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
+USE_X_FORWARDED_HOST = True
+CSRF_TRUSTED_ORIGINS = ['https://zunaisha.org', 'https://www.zunaisha.org', 'https://zunaisha-db.onrender.com']
 
 # … your existing settings …
 
