@@ -14,6 +14,8 @@ import dj_database_url
 from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG = os.environ.get('DEBUG_VALUE', 'False').lower() == 'true'
+# Required for Render to correctly interpret HTTPS requests when DEBUG=False
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 # … your existing settings …
