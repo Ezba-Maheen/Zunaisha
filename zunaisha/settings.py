@@ -16,7 +16,7 @@ from django.core.exceptions import ImproperlyConfigured
 import dj_database_url
 from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
-DEBUG = True
+DEBUG = os.environ.get('DEBUG_VALUE', 'False').lower() == 'true'
 # Required for Render to correctly interpret HTTPS requests when DEBUG=False
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 USE_X_FORWARDED_HOST = True
@@ -159,3 +159,54 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER') # IMPORTANT: Get from enviro
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') # IMPORTANT: Get from environment variable
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'zunaishaclothing@gmail.com') # Get from env var, default to your email
 SERVER_EMAIL = DEFAULT_FROM_EMAIL # Important for Django's error reporting
+
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt': "%d/%b/%Y %H:%M:%S"
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO', # Or 'DEBUG' for even more verbosity
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose', # Use verbose formatter to get detailed output
+            # 'stream': sys.stdout, # Explicitly direct to stdout, though Render often captures by default
+        },
+        # You can add other handlers like 'mail_admins' here for production
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO', # Set to INFO or DEBUG to capture more
+            'propagate': False,
+        },
+        'django.request': { # Especially important for HTTP request errors
+            'handlers': ['console'],
+            'level': 'ERROR', # We want all errors here
+            'propagate': False,
+        },
+        'zunaisha': { # Replace 'zunaisha' with your main Django app's name
+            'handlers': ['console'],
+            'level': 'INFO', # Or 'DEBUG' for your own app's logs
+            'propagate': False,
+        },
+        '': { # This is the root logger, captures everything not handled by others
+            'handlers': ['console'],
+            'level': 'INFO', # Or 'DEBUG' for maximum logging
+            'propagate': True,
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO', # Global fallback level
+    },
+}
