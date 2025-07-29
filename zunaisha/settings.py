@@ -8,8 +8,11 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
+
+
 """
 import os
+from django.core.exceptions import ImproperlyConfigured 
 import dj_database_url
 from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,7 +34,9 @@ INTERNAL_IPS = [
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'your-very-long-and-random-default-dev-key')
+SECRET_KEY = os.environ.get('SECRET_KEY')
+if not SECRET_KEY:
+    raise ImproperlyConfigured("The SECRET_KEY environment variable must be set for production.")
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [ BASE_DIR / "static" ]
