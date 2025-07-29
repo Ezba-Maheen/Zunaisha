@@ -47,7 +47,7 @@
         .logo-header {
             display: flex; /* Use flexbox for horizontal alignment */
             align-items: center; /* Vertically center items */
-            justify-content: center; /* Changed from flex-start to center for horizontal centering */
+            justify-content: center; /* Center horizontally */
             padding: 15px 20px; /* Increased padding to make header taller */
             background-color: #f8f8f8;
             border-bottom: 1px solid #eeeeee;
@@ -74,7 +74,7 @@
         /* Styles for the ZUNAISHA text beside the logo - More Fancy Font & Larger */
         .site-title {
             font-family: 'Playfair Display', serif; /* Using Playfair Display for fancy look */
-            font-weight: 400; /* Changed from 700 to 400 (unbold) */
+            font-weight: 400; /* Unbold */
             font-size: 4em; /* Significantly larger font size */
             color: #333333;
             text-transform: uppercase;
@@ -235,6 +235,15 @@
                 opacity: 1;
                 transform: translateY(0);
             }
+        }
+
+        /* Show dropdown on hover (UNCOMMENTED) */
+        .nav-item:hover > .dropdown-menu {
+            display: block !important;
+        }
+
+        .dropdown-submenu:hover > .dropdown-menu {
+            display: block !important;
         }
 
         .icon-buttons {
@@ -418,7 +427,7 @@
             <a href="{% url 'store:index' %}"> {# Link logo to homepage #}
                 <img src="{% static 'wlogo.png' %}" alt="Your Company Logo" class="main-logo">
             </a>
-            <span class="site-title">ZUNAISHA BY ZOHAN ARTS</span> {# New: ZUNAISHA text beside the logo #}
+            <span class="site-title">ZUNAISHA BY ZOHAN ARTS</span> {# Updated text #}
         </div>
 
         <nav class="navbar navbar-expand-lg navbar-light bg-white border-top border-bottom">
@@ -657,7 +666,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<script></script>
+
+<script>
         document.addEventListener('DOMContentLoaded', function () {
             const dropdownDelay = 300; // milliseconds
 
