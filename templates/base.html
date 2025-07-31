@@ -53,8 +53,7 @@
             height: auto; /* Maintain aspect ratio */
             display: block; /* Remove extra space below the image */
             margin: 0 auto; /* Center the image horizontally */
-            /* Adjusted height for 25% decrease */
-            height: 75px; /* Adjust this value. Original look suggests around 100px-120px height, so 75% would be 75-90px. Let's start with 75px. You can fine-tune this. */
+            height: 120px; /* Increased logo size for better visibility */
             width: auto; /* Ensure width scales proportionally */
         }
 
@@ -80,13 +79,13 @@
         }
 
         /* If your images are within a Bootstrap grid, ensure the column classes are correct.
-           Example: <div class="col-md-4 col-sm-6 col-12"><img src="..." class="img-fluid"></div>
-           The `img-fluid` class itself helps a lot for responsiveness.
-           If your images are backgrounds, then this approach changes significantly.
+            Example: <div class="col-md-4 col-sm-6 col-12"><img src="..." class="img-fluid"></div>
+            The `img-fluid` class itself helps a lot for responsiveness.
+            If your images are backgrounds, then this approach changes significantly.
         */
         /* For the specific images like those of dresses (image_92e845.jpg, WhatsApp Image 2025-07-30 at 11.18.02 PM.jpeg),
-           it's often about the container that holds them. If they are in cards, you need to ensure the card body
-           or image container is flexible. Adding this general rule for images in 'main' will help. */
+            it's often about the container that holds them. If they are in cards, you need to ensure the card body
+            or image container is flexible. Adding this general rule for images in 'main' will help. */
 
 
         /* Responsive adjustments for the new header banner */
@@ -99,7 +98,7 @@
             }
             .header-banner-full img {
                 width: 90%; /* Adjust width on smaller screens if needed */
-                height: 60px; /* Further decrease height on smaller screens for logo */
+                height: 80px; /* Increased mobile height for logo */
             }
         }
 
