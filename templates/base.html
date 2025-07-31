@@ -40,91 +40,67 @@
             text-align: center;
         }
 
-        /* Logo Header - Updated for Center Alignment, Larger Size, and Flexbox */
-        .logo-header {
-            display: flex; /* Use flexbox for horizontal alignment */
-            align-items: center; /* Vertically center items */
-            justify-content: center; /* Center horizontally */
-            padding: 15px 20px; /* Increased padding to make header taller */
-            background-color: #f8f8f8;
+        /* NEW Header Banner for the full-width logo */
+        .header-banner-full {
+            background-color: #f8f8f8; /* Adjust background if needed */
+            padding: 10px 0; /* Add vertical padding, no horizontal padding to allow full width */
+            text-align: center;
             border-bottom: 1px solid #eeeeee;
-            min-height: 100px; /* Ensure a minimum height for the header */
         }
 
-        /* Main Logo - Increased Size and Adjusted Margins */
+        .header-banner-full img {
+            max-width: 100%; /* Ensure logo is responsive and fits within the width */
+            height: auto; /* Maintain aspect ratio */
+            display: block; /* Remove extra space below the image */
+            margin: 0 auto; /* Center the image horizontally */
+        }
+
+        /* Removed/commented out old logo-header and site-title styles as they are no longer needed */
+        /*
+        .logo-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 20px;
+            background-color: #f8f8f8;
+            border-bottom: 1px solid #eeeeee;
+            min-height: 100px;
+        }
         .main-logo {
             object-fit: contain;
             display: block;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             border-radius: 5px;
-            margin-right: 25px; /* Increased space between logo and text */
+            margin-right: 25px;
         }
-
         .main-logo:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
             cursor: pointer;
         }
-
-        /* Styles for the ZUNAISHA text beside the logo - More Fancy Font & Larger */
         .site-title {
-            font-family: 'Great Vibes', cursive; /* Using Great Vibes for fancy look */
-            font-weight: 400; /* Unbold */
-            font-size: 5.5em; /* Significantly larger font size */
-            color: #600018; /* Maroon color similar to logo */
-            text-transform: none; /* Remove uppercase for Great Vibes as it's a script font */
-            letter-spacing: 0px; /* Adjust letter spacing for script font */
+            font-family: 'Great Vibes', cursive;
+            font-weight: 400;
+            font-size: 5.5em;
+            color: #600018;
+            text-transform: none;
+            letter-spacing: 0px;
             white-space: nowrap;
-            line-height: 1; /* Ensure tight vertical alignment */
-            padding-top: 5px; /* Small adjustment if needed for vertical alignment */
+            line-height: 1;
+            padding-top: 5px;
         }
+        */
 
-        /* Responsive adjustments for logo and title */
-        @media (max-width: 992px) { /* Adjust for medium screens (laptops/large tablets) */
-            .main-logo {
-                margin-right: 20px;
+        /* Responsive adjustments for the new header banner */
+        @media (max-width: 768px) {
+            .header-banner-full {
+                padding: 5px 0; /* Less vertical padding on smaller screens */
             }
-            .site-title {
-                font-size: 4.5em; /* Adjusted down slightly for medium screens */
-                letter-spacing: 0px;
-            }
-            .logo-header {
-                min-height: 80px;
-                padding: 10px 15px;
+            .header-banner-full img {
+                width: 90%; /* Adjust width on smaller screens if needed */
             }
         }
 
-        @media (max-width: 768px) { /* Adjust for tablet screens */
-            .main-logo {
-                margin-right: 15px;
-            }
-            .site-title {
-                font-size: 3.5em; /* Adjusted down slightly for tablet screens */
-                padding-top: 10px; /* Adjust padding if needed for alignment */
-            }
-            .logo-header {
-                min-height: 70px;
-                padding: 10px;
-                flex-direction: column; /* Stack logo and text on small screens */
-            }
-            .logo-header .main-logo {
-                margin-right: 0;
-                margin-bottom: 5px;
-            }
-        }
-
-        @media (max-width: 480px) { /* Adjust for mobile screens */
-            .main-logo {
-                margin-right: 10px;
-            }
-            .site-title {
-                font-size: 2.5em; /* Adjusted down for mobile screens */
-            }
-            .logo-header {
-                min-height: 60px;
-                padding: 8px;
-            }
-        }
 
         /* Image reset (from your original code) */
         img {
@@ -262,6 +238,7 @@
         .footer-col {
             flex: 1 1 220px;
             margin: 10px;
+            text-align: center; /* Center content within each footer column */
         }
         .footer-col h4 {
             font-size: 1rem;
@@ -274,11 +251,13 @@
         .footer-col p {
             font-size: 0.875rem;
             margin: 8px 0;
+            text-align: center; /* Center text paragraphs in footer columns */
         }
         .links-list {
             list-style: none;
             padding: 0;
             margin: 0;
+            text-align: center; /* Center links list */
         }
         .links-list li {
             margin: 6px 0;
@@ -313,16 +292,12 @@
         }
 
         .newsletter-section {
-            /* Default mobile styles */
             width: 100%;
-            /* ... other mobile-specific styles ... */
         }
 
         @media (min-width: 768px) {
             .newsletter-section {
-                /* Tablet/Desktop styles */
                 width: 300px; /* Or flex-basis: 30%; */
-                /* ... other desktop-specific styles ... */
             }
         }
 
@@ -426,11 +401,12 @@
         <div class="top-bar">
             For Online Queries Call / Whatsapp: (+92) 0321 0835000 Email: <span style="color: white;">zunaishabyzohan@gmail.com</span>
         </div>
-        <div class="logo-header">
-            <a href="{% url 'store:index' %}"> {# Link logo to homepage #}
-                <img src="{% static 'wqlogo.png' %}" alt="Your Company Logo" class="main-logo" style="width: 180px; height: auto;">
+        
+        {# New header banner for the full-width logo #}
+        <div class="header-banner-full">
+            <a href="{% url 'store:index' %}">
+                <img src="{% static 'wslogo.png' %}" alt="Zunaisha by Zohan Arts Logo Banner">
             </a>
-            <span class="site-title">Zunaisha by zohan arts </span> {# Updated text #}
         </div>
 
         <nav class="navbar navbar-expand-lg navbar-light bg-white border-top border-bottom">
@@ -627,8 +603,6 @@
                 <h4>NEWSLETTER</h4>
                 <p>Promotions, new products and sales. Directly to your inbox.</p>
 
-                {# Add an ID to the form and the input, and a div for messages #}
-                {# Changed form action to be empty as JS will handle submission #}
                 <form id="newsletter-form" action="" method="post" class="newsletter-form">
                     {% csrf_token %} {# Include CSRF token for Django forms #}
                     <div class="input-group"> {# This div might be specific to your styling, keep if it works #}
