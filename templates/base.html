@@ -50,11 +50,10 @@
 
         .header-banner-full img {
             max-width: 100%; /* Ensure logo is responsive and fits within the width */
-            height: auto; /* Maintain aspect ratio */
+            height: 230px; /* INCREASED logo size as requested */
+            width: auto; /* Ensure width scales proportionally */
             display: block; /* Remove extra space below the image */
             margin: 0 auto; /* Center the image horizontally */
-            height: 120px; /* Increased logo size for better visibility */
-            width: auto; /* Ensure width scales proportionally */
         }
 
         /* Image reset (from your original code) */
@@ -65,28 +64,17 @@
             border-image: initial;
             vertical-align: middle;
         }
-
-        /* --- New/Modified CSS for image display on mobile --- */
-        /* This targets images directly within the main content area. */
-        /* If your images are wrapped in specific divs with classes, use those classes for more precise targeting. */
+        
+        /* === MODIFIED CSS FOR IMAGES IN CARDS === */
+        /* This targets all images inside the main content area */
         main img {
-            max-width: 100%; /* Ensures images don't overflow their containers */
-            height: auto;    /* Maintains aspect ratio */
-            display: block;  /* Removes extra space below images */
-            margin-left: auto; /* Centers images if they are smaller than max-width */
-            margin-right: auto;/* Centers images if they are smaller than max-width */
-            object-fit: contain; /* Ensures the entire image is visible, scaling it down if necessary */
+            width: 100%; /* Ensure images always take up 100% of their container width */
+            height: auto; /* Maintain aspect ratio to prevent distortion */
+            object-fit: contain; /* Ensures the entire image is visible within its container, scaling down if necessary */
+            display: block; /* Removes extra space below images */
+            margin-left: auto; /* Centers images horizontally */
+            margin-right: auto;
         }
-
-        /* If your images are within a Bootstrap grid, ensure the column classes are correct.
-            Example: <div class="col-md-4 col-sm-6 col-12"><img src="..." class="img-fluid"></div>
-            The `img-fluid` class itself helps a lot for responsiveness.
-            If your images are backgrounds, then this approach changes significantly.
-        */
-        /* For the specific images like those of dresses (image_92e845.jpg, WhatsApp Image 2025-07-30 at 11.18.02 PM.jpeg),
-            it's often about the container that holds them. If they are in cards, you need to ensure the card body
-            or image container is flexible. Adding this general rule for images in 'main' will help. */
-
 
         /* Responsive adjustments for the new header banner */
         @media (max-width: 768px) {
@@ -98,7 +86,7 @@
             }
             .header-banner-full img {
                 width: 90%; /* Adjust width on smaller screens if needed */
-                height: 80px; /* Increased mobile height for logo */
+                height: 120px; /* Adjusted mobile height for logo to be visible but not too large */
             }
         }
 
@@ -618,7 +606,6 @@
     </a>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
 <script>
         document.addEventListener('DOMContentLoaded', function () {
             const dropdownDelay = 300; // milliseconds
