@@ -48,18 +48,18 @@
             padding: 15px 20px; /* Increased padding to make header taller */
             background-color: #f8f8f8;
             border-bottom: 1px solid #eeeeee;
-            min-height: 100px; /* Ensure a minimum height for the header */
+            min-height: 120px; /* **Increased min-height for header to accommodate larger logo** */
         }
 
         /* Main Logo - Increased Size and Adjusted Margins */
         .main-logo {
-            width: 150px;   /* Increased width for a larger logo */
-            height: 150px;  /* Increased height for a larger logo */
+            width: 180px;   /* **Increased width for a larger logo (from 150px to 180px)** */
+            height: 180px;  /* **Increased height for a larger logo (from 150px to 180px)** */
             object-fit: contain;
             display: block;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             border-radius: 5px;
-            margin-right: 25px; /* Increased space between logo and text */
+            margin-right: 30px; /* **Slightly increased space between logo and text** */
         }
 
         .main-logo:hover {
@@ -72,7 +72,7 @@
         .site-title {
             font-family: 'Great Vibes', cursive; /* Using Great Vibes for fancy look */
             font-weight: 400; /* Unbold */
-            font-size: 5.5em; /* Significantly larger font size */
+            font-size: 6em; /* **Slightly increased font size for balance (from 5.5em to 6em)** */
             color: #600018; /* Maroon color similar to logo */
             text-transform: none; /* Remove uppercase for Great Vibes as it's a script font */
             letter-spacing: 0px; /* Adjust letter spacing for script font */
@@ -84,32 +84,32 @@
         /* Responsive adjustments for logo and title */
         @media (max-width: 992px) { /* Adjust for medium screens (laptops/large tablets) */
             .main-logo {
-                width: 120px;
-                height: 120px;
-                margin-right: 20px;
+                width: 150px; /* Adjusted for responsive */
+                height: 150px; /* Adjusted for responsive */
+                margin-right: 25px;
             }
             .site-title {
-                font-size: 4.5em; /* Adjusted down slightly for medium screens */
+                font-size: 5em; /* Adjusted down slightly for medium screens */
                 letter-spacing: 0px;
             }
             .logo-header {
-                min-height: 80px;
+                min-height: 100px; /* Adjusted for responsive */
                 padding: 10px 15px;
             }
         }
 
         @media (max-width: 768px) { /* Adjust for tablet screens */
             .main-logo {
-                width: 100px;
-                height: 100px;
+                width: 120px; /* Adjusted for responsive */
+                height: 120px; /* Adjusted for responsive */
                 margin-right: 15px;
             }
             .site-title {
-                font-size: 3.5em; /* Adjusted down slightly for tablet screens */
+                font-size: 4em; /* Adjusted down slightly for tablet screens */
                 padding-top: 10px; /* Adjust padding if needed for alignment */
             }
             .logo-header {
-                min-height: 70px;
+                min-height: 90px; /* Adjusted for responsive */
                 padding: 10px;
                 flex-direction: column; /* Stack logo and text on small screens */
             }
@@ -121,15 +121,15 @@
 
         @media (max-width: 480px) { /* Adjust for mobile screens */
             .main-logo {
-                width: 80px;
-                height: 80px;
+                width: 90px; /* Adjusted for responsive */
+                height: 90px; /* Adjusted for responsive */
                 margin-right: 10px;
             }
             .site-title {
-                font-size: 2.5em; /* Adjusted down for mobile screens */
+                font-size: 3em; /* Adjusted down for mobile screens */
             }
             .logo-header {
-                min-height: 60px;
+                min-height: 70px; /* Adjusted for responsive */
                 padding: 8px;
             }
         }
@@ -438,7 +438,7 @@
             <a href="{% url 'store:index' %}"> {# Link logo to homepage #}
                 <img src="{% static 'wqlogo.png' %}" alt="Your Company Logo" class="main-logo">
             </a>
-            <span class="site-title">Znaisha by zohan arts</span> {# Updated text #}
+            <span class="site-title">Zunaisha </span> {# Updated text #}
         </div>
 
         <nav class="navbar navbar-expand-lg navbar-light bg-white border-top border-bottom">
