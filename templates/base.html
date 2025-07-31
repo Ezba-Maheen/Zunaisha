@@ -6,14 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}ZUNAISHA BY ZOHAN ARTS{% endblock %}</title>
         
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <!-- Google Fonts - Inter and Playfair Display -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
@@ -73,12 +70,12 @@
 
         /* Styles for the ZUNAISHA text beside the logo - More Fancy Font & Larger */
         .site-title {
-            font-family: 'Playfair Display', serif; /* Using Playfair Display for fancy look */
+            font-family: 'Great Vibes', cursive; /* Using Great Vibes for fancy look */
             font-weight: 400; /* Unbold */
-            font-size: 4em; /* Significantly larger font size */
-            color: #333333;
-            text-transform: uppercase;
-            letter-spacing: 3px; /* Increased letter spacing */
+            font-size: 5.5em; /* Significantly larger font size */
+            color: #600018; /* Maroon color similar to logo */
+            text-transform: none; /* Remove uppercase for Great Vibes as it's a script font */
+            letter-spacing: 0px; /* Adjust letter spacing for script font */
             white-space: nowrap;
             line-height: 1; /* Ensure tight vertical alignment */
             padding-top: 5px; /* Small adjustment if needed for vertical alignment */
@@ -92,8 +89,8 @@
                 margin-right: 20px;
             }
             .site-title {
-                font-size: 3em;
-                letter-spacing: 2px;
+                font-size: 4.5em; /* Adjusted down slightly for medium screens */
+                letter-spacing: 0px;
             }
             .logo-header {
                 min-height: 80px;
@@ -108,12 +105,17 @@
                 margin-right: 15px;
             }
             .site-title {
-                font-size: 2.2em;
-                letter-spacing: 1.5px;
+                font-size: 3.5em; /* Adjusted down slightly for tablet screens */
+                padding-top: 10px; /* Adjust padding if needed for alignment */
             }
             .logo-header {
                 min-height: 70px;
                 padding: 10px;
+                flex-direction: column; /* Stack logo and text on small screens */
+            }
+            .logo-header .main-logo {
+                margin-right: 0;
+                margin-bottom: 5px;
             }
         }
 
@@ -124,8 +126,7 @@
                 margin-right: 10px;
             }
             .site-title {
-                font-size: 1.8em;
-                letter-spacing: 1px;
+                font-size: 2.5em; /* Adjusted down for mobile screens */
             }
             .logo-header {
                 min-height: 60px;
@@ -299,30 +300,40 @@
         .links-list a:hover {
             color: #000;
         }
-        .social-icons a {
-            display: inline-block;
-            transition: transform 0.2s ease, color 0.2s ease, filter 0.2s ease;
-        }
-        .social-icons a:hover {
-            transform: scale(1.2);
-            color:yellow !important;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-        }
-
-      .newsletter-section {
-        /* Default mobile styles */
-        width: 100%;
-        /* ... other mobile-specific styles ... */
-    }
-
-    @media (min-width: 768px) {
-        .newsletter-section {
-            /* Tablet/Desktop styles */
-            width: 300px; /* Or flex-basis: 30%; */
-            /* ... other desktop-specific styles ... */
-        }
-    }
         
+        /* Adjusted social icons within footer */
+        .footer-col .social-icons {
+            margin-top: 15px; /* Add some space above the icons */
+            display: flex; /* Use flexbox for alignment */
+            justify-content: center; /* Center horizontally */
+            gap: 15px; /* Space between icons */
+        }
+
+        .footer-col .social-icons a {
+            color: #555; /* Default color for icons */
+            font-size: 1.8em; /* Slightly larger for better visibility */
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .footer-col .social-icons a:hover {
+            color: #800020; /* Example hover color (maroon) */
+            transform: scale(1.1);
+        }
+
+        .newsletter-section {
+            /* Default mobile styles */
+            width: 100%;
+            /* ... other mobile-specific styles ... */
+        }
+
+        @media (min-width: 768px) {
+            .newsletter-section {
+                /* Tablet/Desktop styles */
+                width: 300px; /* Or flex-basis: 30%; */
+                /* ... other desktop-specific styles ... */
+            }
+        }
+            
         .footer-bottom {
             border-top: 1px solid #ddd;
             display: flex;
@@ -427,7 +438,7 @@
             <a href="{% url 'store:index' %}"> {# Link logo to homepage #}
                 <img src="{% static 'wqlogo.png' %}" alt="Your Company Logo" class="main-logo">
             </a>
-            <span class="site-title">ZUNAISHA </span> {# Updated text #}
+            <span class="site-title">Zunaisha </span> {# Updated text #}
         </div>
 
         <nav class="navbar navbar-expand-lg navbar-light bg-white border-top border-bottom">
@@ -570,7 +581,6 @@
                     </ul>
                 </div>
                 <div class="d-none d-lg-flex">
-                    
                     <a href="{% url 'store:cart_detail' %}" class="icon-buttons"><i class="bi bi-bag"></i></a> {# Example URL #}
                 </div>
             </div>
@@ -587,7 +597,7 @@
             <div class="footer-col">
                 <h4>FIND US <span class="icon-pin">📍</span></h4>
                 <p><strong>Address:</strong><br>
-                    ABC, Center Shop No#27 Farshi bazar uposit UK center Kashmiri  gate Azam cloth market, Lahore</p>
+                    ABC, Center Shop No#27 Farshi bazar uposit UK center Kashmiri gate Azam cloth market, Lahore</p>
                 <p>FOR CUSTOMER SERVICES : 11:00 AM TO 9:00 PM<br>
                     (MONDAY TO SATURDAY)<br>
                     (+92) 321 0835000</p>
@@ -595,34 +605,18 @@
                     (Pret & Unstitch)<br>
                     Call/WhatsApp: (+92) 321 0835000<br>
                     Email: zunaishaclothing@gmail.com</p>
-                
-
-              
-
             </div>
 
             <div class="footer-col">
                 <h4>STORE HOURS</h4>
                 <p><strong>MONDAY – SATURDAY:</strong><br>
                     11:00 AM – 10:00 PM</p>
-  <div class="container text-center social-icons">
-                    <div class="d-flex justify-content-center gap-3">
-                        <a href="https://www.facebook.com/share/16t5RYifVW/" class="text-dark fs-3">
-                            <i class="bi bi-facebook"></i>
-                        </a>
-                        <a href="https://www.instagram.com/zunaisha_09876?igsh=OGsxNmxpbWg2OTUz" class="text-dark fs-3">
-                            <i class="bi bi-instagram"></i>
-                        </a>
-                        <a href="tel:+923210835000" class="text-dark fs-3">
-                            <i class="bi bi-telephone-fill"></i>
-                        </a>
-                    
-                        <a href="https://wa.me/923210835000" class="text-dark fs-3">
-                            <i class="bi bi-whatsapp"></i>
-                        </a>
-                    </div>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/share/16t5RYifVW/" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="https://www.instagram.com/zunaisha_09876?igsh=OGsxNmxpbWg2OTUz" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                    <a href="tel:+923210835000" aria-label="Call Us"><i class="bi bi-telephone-fill"></i></a>
+                    <a href="https://wa.me/923210835000" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
                 </div>
-               
             </div>
 
             <div class="footer-col">
@@ -638,21 +632,21 @@
             </div>
 
            <div class="newsletter-section">
-    <h4>NEWSLETTER</h4>
-    <p>Promotions, new products and sales. Directly to your inbox.</p>
-    
-    {# Add an ID to the form and the input, and a div for messages #}
-    {# Changed form action to be empty as JS will handle submission #}
-    <form id="newsletter-form" action="" method="post" class="newsletter-form"> 
-        {% csrf_token %} {# Include CSRF token for Django forms #}
-        <div class="input-group"> {# This div might be specific to your styling, keep if it works #}
-            <input type="email" class="form-control" id="newsletter-email" placeholder="Email address" required>
-            <button type="submit" class="btn btn-dark" id="subscribe-button">SUBSCRIBE</button>
-        </div>
-        {# Div to display success/error messages #}
-        <div id="newsletter-message" class="mt-2" style="display: none;"></div>
-    </form>
-</div>
+                <h4>NEWSLETTER</h4>
+                <p>Promotions, new products and sales. Directly to your inbox.</p>
+                
+                {# Add an ID to the form and the input, and a div for messages #}
+                {# Changed form action to be empty as JS will handle submission #}
+                <form id="newsletter-form" action="" method="post" class="newsletter-form"> 
+                    {% csrf_token %} {# Include CSRF token for Django forms #}
+                    <div class="input-group"> {# This div might be specific to your styling, keep if it works #}
+                        <input type="email" class="form-control" id="newsletter-email" placeholder="Email address" required>
+                        <button type="submit" class="btn btn-dark" id="subscribe-button">SUBSCRIBE</button>
+                    </div>
+                    {# Div to display success/error messages #}
+                    <div id="newsletter-message" class="mt-2" style="display: none;"></div>
+                </form>
+            </div>
         </div>
 
         <div class="footer-bottom">
@@ -666,7 +660,6 @@
     </a>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
 
 <script>
         document.addEventListener('DOMContentLoaded', function () {
