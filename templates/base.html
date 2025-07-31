@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}ZUNAISHA BY ZOHAN ARTS{% endblock %}</title>
-        
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
@@ -48,18 +48,16 @@
             padding: 15px 20px; /* Increased padding to make header taller */
             background-color: #f8f8f8;
             border-bottom: 1px solid #eeeeee;
-            min-height: 120px; /* **Increased min-height for header to accommodate larger logo** */
+            min-height: 100px; /* Ensure a minimum height for the header */
         }
 
         /* Main Logo - Increased Size and Adjusted Margins */
         .main-logo {
-            width: 180px;   /* **Increased width for a larger logo (from 150px to 180px)** */
-            height: 180px;  /* **Increased height for a larger logo (from 150px to 180px)** */
             object-fit: contain;
             display: block;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             border-radius: 5px;
-            margin-right: 30px; /* **Slightly increased space between logo and text** */
+            margin-right: 25px; /* Increased space between logo and text */
         }
 
         .main-logo:hover {
@@ -72,7 +70,7 @@
         .site-title {
             font-family: 'Great Vibes', cursive; /* Using Great Vibes for fancy look */
             font-weight: 400; /* Unbold */
-            font-size: 6em; /* **Slightly increased font size for balance (from 5.5em to 6em)** */
+            font-size: 5.5em; /* Significantly larger font size */
             color: #600018; /* Maroon color similar to logo */
             text-transform: none; /* Remove uppercase for Great Vibes as it's a script font */
             letter-spacing: 0px; /* Adjust letter spacing for script font */
@@ -84,32 +82,28 @@
         /* Responsive adjustments for logo and title */
         @media (max-width: 992px) { /* Adjust for medium screens (laptops/large tablets) */
             .main-logo {
-                width: 150px; /* Adjusted for responsive */
-                height: 150px; /* Adjusted for responsive */
-                margin-right: 25px;
+                margin-right: 20px;
             }
             .site-title {
-                font-size: 5em; /* Adjusted down slightly for medium screens */
+                font-size: 4.5em; /* Adjusted down slightly for medium screens */
                 letter-spacing: 0px;
             }
             .logo-header {
-                min-height: 100px; /* Adjusted for responsive */
+                min-height: 80px;
                 padding: 10px 15px;
             }
         }
 
         @media (max-width: 768px) { /* Adjust for tablet screens */
             .main-logo {
-                width: 120px; /* Adjusted for responsive */
-                height: 120px; /* Adjusted for responsive */
                 margin-right: 15px;
             }
             .site-title {
-                font-size: 4em; /* Adjusted down slightly for tablet screens */
+                font-size: 3.5em; /* Adjusted down slightly for tablet screens */
                 padding-top: 10px; /* Adjust padding if needed for alignment */
             }
             .logo-header {
-                min-height: 90px; /* Adjusted for responsive */
+                min-height: 70px;
                 padding: 10px;
                 flex-direction: column; /* Stack logo and text on small screens */
             }
@@ -121,15 +115,13 @@
 
         @media (max-width: 480px) { /* Adjust for mobile screens */
             .main-logo {
-                width: 90px; /* Adjusted for responsive */
-                height: 90px; /* Adjusted for responsive */
                 margin-right: 10px;
             }
             .site-title {
-                font-size: 3em; /* Adjusted down for mobile screens */
+                font-size: 2.5em; /* Adjusted down for mobile screens */
             }
             .logo-header {
-                min-height: 70px; /* Adjusted for responsive */
+                min-height: 60px;
                 padding: 8px;
             }
         }
@@ -300,7 +292,7 @@
         .links-list a:hover {
             color: #000;
         }
-        
+
         /* Adjusted social icons within footer */
         .footer-col .social-icons {
             margin-top: 15px; /* Add some space above the icons */
@@ -333,7 +325,7 @@
                 /* ... other desktop-specific styles ... */
             }
         }
-            
+
         .footer-bottom {
             border-top: 1px solid #ddd;
             display: flex;
@@ -432,13 +424,13 @@
 
     <header>
         <div class="top-bar">
-            For Online Queries Call / Whatsapp: (+92) 0321 0835000 Email: zunaishaclothing@gmail.com
+            For Online Queries Call / Whatsapp: (+92) 0321 0835000 Email: <span style="color: white;">zunaishabyzohan@gmail.com</span>
         </div>
         <div class="logo-header">
             <a href="{% url 'store:index' %}"> {# Link logo to homepage #}
-                <img src="{% static 'wqlogo.png' %}" alt="Your Company Logo" class="main-logo">
+                <img src="{% static 'wqlogo.png' %}" alt="Your Company Logo" class="main-logo" style="width: 180px; height: auto;">
             </a>
-            <span class="site-title">Zunaisha </span> {# Updated text #}
+            <span class="site-title">Zunaisha by zohan arts </span> {# Updated text #}
         </div>
 
         <nav class="navbar navbar-expand-lg navbar-light bg-white border-top border-bottom">
@@ -598,13 +590,13 @@
                 <h4>FIND US <span class="icon-pin">📍</span></h4>
                 <p><strong>Address:</strong><br>
                     ABC, Center Shop No#27 Farshi bazar uposit UK center Kashmiri gate Azam cloth market, Lahore</p>
-                <p>FOR CUSTOMER SERVICES : 11:00 AM TO 9:00 PM<br>
+                <p>FOR CUSTOMER SERVICES&#8239;:&#8239;11:00 AM TO 9:00 PM<br>
                     (MONDAY TO SATURDAY)<br>
-                    (+92) 321 0835000</p>
+                    (+92)&#8239;321 0835000</p>
                 <p><strong>For Online Order Inquiries:</strong><br>
                     (Pret & Unstitch)<br>
-                    Call/WhatsApp: (+92) 321 0835000<br>
-                    Email: zunaishaclothing@gmail.com</p>
+                    Call/WhatsApp: (+92)&#8239;321 0835000<br>
+                    Email: zunaishabyzohan@gmail.com</p>
             </div>
 
             <div class="footer-col">
@@ -634,10 +626,10 @@
            <div class="newsletter-section">
                 <h4>NEWSLETTER</h4>
                 <p>Promotions, new products and sales. Directly to your inbox.</p>
-                
+
                 {# Add an ID to the form and the input, and a div for messages #}
                 {# Changed form action to be empty as JS will handle submission #}
-                <form id="newsletter-form" action="" method="post" class="newsletter-form"> 
+                <form id="newsletter-form" action="" method="post" class="newsletter-form">
                     {% csrf_token %} {# Include CSRF token for Django forms #}
                     <div class="input-group"> {# This div might be specific to your styling, keep if it works #}
                         <input type="email" class="form-control" id="newsletter-email" placeholder="Email address" required>
