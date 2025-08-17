@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'store', # Your 'store' app
     'whitenoise.runserver_nostatic', # For development
-    'whitenoise.runserver_nostatic',
+    
 ]
 
 MIDDLEWARE = [
