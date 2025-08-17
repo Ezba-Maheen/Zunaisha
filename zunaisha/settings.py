@@ -127,13 +127,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
 EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
 EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True').lower() == 'true'
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
-SERVER_EMAIL = os.environ.get('SERVER_EMAIL')
-
-if not DEFAULT_FROM_EMAIL or not SERVER_EMAIL:
-    raise ImproperlyConfigured("DEFAULT_FROM_EMAIL and SERVER_EMAIL environment variables must be set.")
+EMAIL_HOST_USER = 'zunaishabyzohan@gmail.com'
+EMAIL_HOST_PASSWORD = 'oann nofu dtgt kciq'
+DEFAULT_FROM_EMAIL = 'zunaishabyzohan@gmail.com'
+SERVER_EMAIL = 'zunaishabyzohan@gmail.com'
 
 # Enhanced Logging Configuration for Production Debugging
 LOGGING = {
