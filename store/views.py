@@ -1,4 +1,16 @@
 # store/views.py
+import os
+from django.core.management import call_command
+
+# This code will be run on the first page load
+# It will create a superuser if it doesn't exist
+if 'DYNO' in os.environ:
+    try:
+        call_command('createsuperuser', '--no-input')
+    except:
+        pass
+
+
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, JsonResponse
 from .models import Product, CartItem, Cart, Order, OrderItem, Category # Import Category model
