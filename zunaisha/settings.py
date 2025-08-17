@@ -8,12 +8,15 @@ from pathlib import Path
 from django.core.exceptions import ImproperlyConfigured
 import dj_database_url
 
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
 if not SECRET_KEY:
     raise ImproperlyConfigured("SECRET_KEY environment variable must be set.")
 
+# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG_VALUE', 'False').lower() == 'true'
 
 # ALLOWED_HOSTS for production. Ensures only trusted hosts can access.
@@ -25,8 +28,9 @@ if not ALLOWED_HOSTS and not DEBUG:
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 USE_X_FORWARDED_HOST = True
 
+# CSRF_TRUSTED_ORIGINS should include your domain and Render subdomain.
 CSRF_TRUSTED_ORIGINS = [
-    'https://zunaisha-db.onrender.com',
+    'https://*.onrender.com',  # Using a wildcard for your Render subdomain
     'https://zunaisha.org',
     'https://www.zunaisha.org',
 ]
@@ -49,6 +53,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'store', # Your 'store' app
+    'whitenoise.runserver_nostatic', # For development
+    'whitenoise.runserver_nostatic',
 ]
 
 MIDDLEWARE = [
@@ -82,6 +88,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'zunaisha.wsgi.application'
 
+# Database configuration for Render
 DATABASES = {
     'default': dj_database_url.config(
         default='sqlite:///db.sqlite3',
@@ -101,10 +108,12 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
+# Static files configuration
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [ BASE_DIR / "static" ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
+# WhiteNoise storage for static files
 STORAGES = {
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
@@ -116,15 +125,18 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Email settings (ensure env vars are set on Render if sending emails)
+# Email settings with checks for production
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
 EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
 EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True').lower() == 'true'
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'zunaishaclothing@gmail.com')
-SERVER_EMAIL = DEFAULT_FROM_EMAIL
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
+SERVER_EMAIL = os.environ.get('SERVER_EMAIL')
+
+if not DEFAULT_FROM_EMAIL or not SERVER_EMAIL:
+    raise ImproperlyConfigured("DEFAULT_FROM_EMAIL and SERVER_EMAIL environment variables must be set.")
 
 # Enhanced Logging Configuration for Production Debugging
 LOGGING = {
@@ -155,7 +167,7 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': False,
         },
-        'zunaisha': { # Replace with your main app name if different
+        'zunaisha': {
             'handlers': ['console'],
             'level': 'INFO',
             'propagate': False,
