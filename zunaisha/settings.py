@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'zunaisha', # Your 'store' app
+    'store',
     'whitenoise.runserver_nostatic', # For development
     
 ]
