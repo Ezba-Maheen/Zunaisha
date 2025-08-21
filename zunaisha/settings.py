@@ -27,7 +27,7 @@ USE_X_FORWARDED_HOST = True
 
 # CSRF_TRUSTED_ORIGINS should include your domain and Render subdomain.
 CSRF_TRUSTED_ORIGINS = [
-    'https://*.onrender.com', 
+    'https://*.onrender.com',  # Using a wildcard for your Render subdomain
     'https://zunaisha.org',
     'https://www.zunaisha.org',
 ]
@@ -49,10 +49,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'zunaisha', # This app name is a duplicate of the project name and is likely an error.
-    'store', # Your 'store' app
+    'zunaisha', # Your 'store' app
+    'store',
     'whitenoise.runserver_nostatic', # For development
-    'whitenoise.storage.CompressedManifestStaticFilesStorage', # Added for WhiteNoise production storage
+    
 ]
 
 MIDDLEWARE = [
@@ -112,11 +112,7 @@ STATICFILES_DIRS = [ BASE_DIR / "static" ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # WhiteNoise storage for static files
-# Corrected the STORAGES configuration to use the correct syntax for Django 5.0+
 STORAGES = {
-    "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-    },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
@@ -126,6 +122,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+import os
 
 # Email settings with checks for production
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -179,6 +177,6 @@ LOGGING = {
     },
     'root': {
         'handlers': ['console'],
-            'level': 'INFO',
+        'level': 'INFO',
     },
 }
