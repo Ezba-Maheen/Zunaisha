@@ -67,10 +67,13 @@
         transform: scale(1.05);
     }
 
+    /* --- ADJUSTED FOR MOBILE VIEW --- */
     .card img {
-        height: 500px;
-        object-fit: cover;
+        width: 100%; /* Ensure image fills its container */
+        aspect-ratio: 3 / 4; /* Maintains a 3:4 aspect ratio for the image */
+        object-fit: contain; /* Prevents cropping, ensuring the full image is visible */
     }
+    /* --- END OF ADJUSTMENT --- */
 
     .card-title {
         text-align: center;
@@ -96,11 +99,7 @@
         text-decoration: none !important; /* Ensure no underline */
     }
 
-    @media (max-width: 768px) {
-        .card img {
-            height: 220px;
-        }
-    }
+    /* Your original media query for card images is now redundant and removed, as aspect-ratio handles responsiveness */
 
     .section-heading {
         font-family: 'Georgia', serif;
@@ -184,12 +183,13 @@
         box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
     }
 
+    /* --- ADJUSTED FOR MOBILE VIEW --- */
     .image-box img {
-        width: 100%;
-        height: 500px;
-        object-fit: cover;
-        display: block;
+        width: 100%; /* Ensure image fills its container */
+        aspect-ratio: 3 / 4; /* Maintains a 3:4 aspect ratio for the image */
+        object-fit: contain; /* Prevents cropping, ensuring the full image is visible */
     }
+    /* --- END OF ADJUSTMENT --- */
 
     .image-box p {
         margin: 15px 0;
@@ -208,9 +208,7 @@
         .image-box {
             width: 90vw;
         }
-        .image-box img {
-            height: 350px;
-        }
+        /* Your original media query for image-box img is now redundant and removed */
     }
 </style>
 {% endblock %}
